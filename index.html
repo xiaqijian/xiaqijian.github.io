@@ -59,8 +59,6 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
-	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -117,8 +115,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -139,9 +135,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
-		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 100%"><a href="/">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -157,6 +151,161 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-vue-router使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/29/vue-router使用/">vue-router使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/29/vue-router使用/" class="archive-article-date">
+  	<time datetime="2017-03-29T05:38:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>肯定里面要有这个模块，然后引入，使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import Router from &apos;vue-router&apos;</div><div class="line">Vue.use(Router)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="然后再开始使用"><a href="#然后再开始使用" class="headerlink" title="然后再开始使用"></a>然后再开始使用</h5><ol>
+<li><p>引入组件<br>利用import</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import heard from &apos;./components/heard&apos;</div><div class="line">import foot from &apos;./components/foot&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>注册router</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const routes = [</div><div class="line">    &#123; path: &apos;/heard&apos;, component: heard &#125;,</div><div class="line">    &#123; path: &apos;/foot&apos;, component: foot &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建vue-router实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">const router = new VueRouter(&#123;</div><div class="line">    routes</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">new Vue(&#123;</div><div class="line">    el: &apos;#app&apos;,</div><div class="line">    router</div><div class="line">&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;div id=&quot;app&quot;&gt;</div><div class="line">    &lt;router-link to=&quot;/heard&quot;&gt; 我是头部 &lt;/router-link&gt;</div><div class="line">    &lt;router-link to=&quot;/foot&quot;&gt; 我是尾部 &lt;/router-link&gt;</div><div class="line">    &lt;!-- 渲染内容 --&gt;</div><div class="line">    &lt;router-view&gt;&lt;/router-view&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/29/vue-router使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-vue-component使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/29/vue-component使用/">vue-component使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/29/vue-component使用/" class="archive-article-date">
+  	<time datetime="2017-03-29T05:38:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在component里面有多种情况，其实很多情况下都是从别的组件导入此组件</p>
+<ol>
+<li><p>导入组件<br>本组件写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">const heard = &#123; template: &apos;&lt;div&gt;this is heardComponent&lt;/div&gt;&apos; &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>导入组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">import heard from &apos;./components/heard.vue&apos;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>注册component<br>全局注册组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">import Vue from &apos;vue&apos;</div><div class="line">Vue.component (&apos;heard&apos;,&#123;</div><div class="line">    template: heard</div><div class="line">&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>局部注册component<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">new Vue (&#123;</div><div class="line">    el:&apos;#app&apos;,</div><div class="line">    components: &#123;</div><div class="line">        &apos;heard&apos;: heard</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>使用component<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// xxx.vue 文件里面使用</div><div class="line">&lt;div id=&quot;app&quot;&gt;</div><div class="line">    &lt;heard&gt;&lt;/heard</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/29/vue-component使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
   
     <article id="post-gulp总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -191,27 +340,45 @@
 </ol>
 <h2 id="主要用到以下插件"><a href="#主要用到以下插件" class="headerlink" title="主要用到以下插件"></a>主要用到以下插件</h2><h6 id="gulp-uglify-js文件压缩"><a href="#gulp-uglify-js文件压缩" class="headerlink" title="gulp-uglify  js文件压缩"></a><a href="https://www.npmjs.com/package/gulp-gulify" target="_blank" rel="external">gulp-uglify</a>  js文件压缩</h6><h6 id="gulp-rename-重命名"><a href="#gulp-rename-重命名" class="headerlink" title="gulp-rename 重命名"></a><a href="https://www.npmjs.com/package/gulp-rename" target="_blank" rel="external">gulp-rename</a> 重命名</h6><h6 id="gulp-minify-css-css压缩"><a href="#gulp-minify-css-css压缩" class="headerlink" title="gulp-minify-css css压缩"></a><a href="https://www.npmjs.com/package/gulp-minify-css" target="_blank" rel="external">gulp-minify-css</a> css压缩</h6><h6 id="gulp-less-编译less"><a href="#gulp-less-编译less" class="headerlink" title="gulp-less  编译less"></a><a href="https://www.npmjs.com/package/gulp-less" target="_blank" rel="external">gulp-less</a>  编译less</h6><h6 id="gulp-autoprefixer-自动添加浏览器前缀"><a href="#gulp-autoprefixer-自动添加浏览器前缀" class="headerlink" title="gulp-autoprefixer   自动添加浏览器前缀"></a><a href="https://www.npmjs.com/package/gulp-autoprefixer" target="_blank" rel="external">gulp-autoprefixer</a>   自动添加浏览器前缀</h6><h6 id="gulp-imagemin-image-压缩"><a href="#gulp-imagemin-image-压缩" class="headerlink" title="gulp-imagemin image 压缩"></a><a href="https://www.npmjs.com/package/gulp-imagemin" target="_blank" rel="external">gulp-imagemin</a> image 压缩</h6><h6 id="gulp-spritesmith-img-雪碧图"><a href="#gulp-spritesmith-img-雪碧图" class="headerlink" title="gulp.spritesmith img 雪碧图"></a><a href="https://www.npmjs.com/package/gulp.spritesmith" target="_blank" rel="external">gulp.spritesmith</a> img 雪碧图</h6><h6 id="gulp-minify-html-html-压缩"><a href="#gulp-minify-html-html-压缩" class="headerlink" title="gulp-minify-html html 压缩"></a><a href="https://www.npmjs.com/package/gulp-minify-html" target="_blank" rel="external">gulp-minify-html</a> html 压缩</h6><h6 id="gulp-concat-文件合并"><a href="#gulp-concat-文件合并" class="headerlink" title="gulp-concat 文件合并"></a><a href="https://www.npmjs.com/package/gulp-concat" target="_blank" rel="external">gulp-concat</a> 文件合并</h6><h6 id="gulp-babel-将es6编译成es5"><a href="#gulp-babel-将es6编译成es5" class="headerlink" title="gulp-babel  将es6编译成es5"></a><a href="https://www.npmjs.com/package/gulp-babel" target="_blank" rel="external">gulp-babel</a>  将es6编译成es5</h6><h6 id="gulp-sourcemaps"><a href="#gulp-sourcemaps" class="headerlink" title="gulp-sourcemaps"></a><a href="https://www.npmjs.com/package/gulp-sourcemaps" target="_blank" rel="external">gulp-sourcemaps</a></h6><h2 id="html-source"><a href="#html-source" class="headerlink" title="html  [source]"></a>html  [<a href="./src/note/html.js">source</a>]</h2><p>html 主要还是进行代码压缩处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;)</div><div class="line">var minifyHtml = require(&apos;gulp-minify-html&apos;)  // html压缩</div><div class="line">gulp.task(&apos;minifyhtml&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/index.html&apos;)</div><div class="line">	.pipe(minifyHtml())</div><div class="line">	.pipe(gulp.dest(&apos;dist&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <p>index.html<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">	&lt;title&gt;首页&lt;/title&gt;</div><div class="line">	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./css/style.css&quot;&gt;</div><div class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;./js/hello.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gulp minifyhtml</div></pre></td></tr></table></figure></p>
+<p>运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gulp minifyhtml</div></pre></td></tr></table></figure>
 <p>之后就可以在dist文件夹下面看到压缩好的index.html</p>
 <h2 id="css-source"><a href="#css-source" class="headerlink" title="css [source]"></a>css [<a href="./src/note/css.js">source</a>]</h2><p>加载所需插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">var rename = require(&apos;gulp-rename&apos;); // 重命名</div><div class="line">var minifyCss = require(&apos;gulp-minify-css&apos;); // css压缩</div><div class="line">var autoprefixer = require(&apos;gulp-autoprefixer&apos;) // 自动添加浏览器前缀</div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>css代码压缩处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// css 压缩</div><div class="line">gulp.task(&apos;minifycss&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/css/*.css&apos;)</div><div class="line">	.pipe(minifyCss())</div><div class="line">	.pipe(gulp.dest(&apos;dist/css&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>css 添加浏览器前缀<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// 自动添加浏览器前缀</div><div class="line">gulp.task(&apos;autoprefixer&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/css/*.css&apos;)</div><div class="line">	.pipe(autoprefixer(&#123;</div><div class="line">		browsers: [&apos;last 2 versions&apos;, &apos;Android &gt;= 4.0&apos;],</div><div class="line">            cascade: true, //是否美化属性值 默认：true 像这样：</div><div class="line">            //-webkit-transform: rotate(45deg);</div><div class="line">            //        transform: rotate(45deg);</div><div class="line">            remove:true //是否去掉不必要的前缀 默认：true </div><div class="line">	&#125;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/css&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>css 重新命名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// css 重名</div><div class="line">gulp.task(&apos;renamecss&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/css/style.css&apos;)</div><div class="line">	.pipe(rename(&apos;style.min.css&apos;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/css&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>css 添加浏览器前缀</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// 自动添加浏览器前缀</div><div class="line">gulp.task(&apos;autoprefixer&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/css/*.css&apos;)</div><div class="line">	.pipe(autoprefixer(&#123;</div><div class="line">		browsers: [&apos;last 2 versions&apos;, &apos;Android &gt;= 4.0&apos;],</div><div class="line">            cascade: true, //是否美化属性值 默认：true 像这样：</div><div class="line">            //-webkit-transform: rotate(45deg);</div><div class="line">            //        transform: rotate(45deg);</div><div class="line">            remove:true //是否去掉不必要的前缀 默认：true </div><div class="line">	&#125;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/css&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>css 重新命名</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// css 重名</div><div class="line">gulp.task(&apos;renamecss&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/css/style.css&apos;)</div><div class="line">	.pipe(rename(&apos;style.min.css&apos;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/css&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h2 id="js-source"><a href="#js-source" class="headerlink" title="js [source]"></a>js [<a href="./src/note/js.js">source</a>]</h2><p>js主要经行压缩，重命名, 合并文件,   ES6 转换ES5</p>
 <p>加载插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">var uglify = require(&apos;gulp-uglify&apos;); // js文件压缩</div><div class="line">var rename = require(&apos;gulp-rename&apos;); // 重命名</div><div class="line">var concat = require(&apos;gulp-concat&apos;); // 文件合并</div><div class="line">var babel = require(&apos;gulp-babel&apos;); // ES6编译成ES5</div></pre></td></tr></table></figure></p>
 <blockquote>
-<p>压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// js文件压缩</div><div class="line">gulp.task(&apos;uglify&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/*.js&apos;)</div><div class="line">	.pipe(uglify())</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>合并文件，重命名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 重命名</div><div class="line">gulp.task(&apos;rename&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/hello.js&apos;)</div><div class="line">	.pipe(rename(&apos;hello.min.js&apos;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 文件合并</div><div class="line">gulp.task(&apos;concat&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/*.js&apos;)</div><div class="line">	.pipe(concat(&apos;concat.js&apos;))</div><div class="line">	.pipe(uglify()) // 合并之后压缩</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>将ES6转换为ES5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 再使用gulp-babel 之前需安装一下内容</div><div class="line">// npm install gulp-babel babel-preset-2015 --save-dev</div><div class="line">// 将ES6转换成ES5</div><div class="line">gulp.task(&apos;es6&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/es6.js&apos;)</div><div class="line">	.pipe(babel())</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>压缩</p>
 </blockquote>
-<h2 id="img-source"><a href="#img-source" class="headerlink" title="img [source]"></a>img [<a href="./src/note/img.js">source</a>]</h2><p>关于图片处理主要经行压缩，制作雪碧图</p>
-<p>加载插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">var imagemin = require(&apos;gulp-imagemin&apos;); // image 压缩</div><div class="line">var imgspriter = require(&apos;gulp.spritesmith&apos;) // img 雪碧图</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// js文件压缩</div><div class="line">gulp.task(&apos;uglify&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/*.js&apos;)</div><div class="line">	.pipe(uglify())</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <blockquote>
-<p>图片压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// image压缩</div><div class="line">gulp.task(&apos;imagemin&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/img/*.&#123;png,jpg,gif,ico&#125;&apos;)</div><div class="line">	.pipe(imagemin())</div><div class="line">	.pipe(gulp.dest(&apos;dist/img&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>雪碧图<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// image 雪碧图</div><div class="line">gulp.task(&apos;imgspriter&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/icon/*.png&apos;)</div><div class="line">	.pipe(imgspriter(&#123;</div><div class="line">		imgName:&apos;sprite.png&apos;,  </div><div class="line">        cssName:&apos;css/icon.css&apos;,  </div><div class="line">        padding:5,  </div><div class="line">        algorithm:&apos;binary-tree&apos;    </div><div class="line">	&#125;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/spriter&apos;))</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>合并文件，重命名</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 重命名</div><div class="line">gulp.task(&apos;rename&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/hello.js&apos;)</div><div class="line">	.pipe(rename(&apos;hello.min.js&apos;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 文件合并</div><div class="line">gulp.task(&apos;concat&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/*.js&apos;)</div><div class="line">	.pipe(concat(&apos;concat.js&apos;))</div><div class="line">	.pipe(uglify()) // 合并之后压缩</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>将ES6转换为ES5</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 再使用gulp-babel 之前需安装一下内容</div><div class="line">// npm install gulp-babel babel-preset-2015 --save-dev</div><div class="line">// 将ES6转换成ES5</div><div class="line">gulp.task(&apos;es6&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/js/es6.js&apos;)</div><div class="line">	.pipe(babel())</div><div class="line">	.pipe(gulp.dest(&apos;dist/js&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>img [<a href="./src/note/img.js">source</a>]</p>
+<p>–<br>关于图片处理主要经行压缩，制作雪碧图</p>
+<p>加载插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">var imagemin = require(&apos;gulp-imagemin&apos;); // image 压缩</div><div class="line">var imgspriter = require(&apos;gulp.spritesmith&apos;) // img 雪碧图</div></pre></td></tr></table></figure>
+<blockquote>
+<p>图片压缩</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// image压缩</div><div class="line">gulp.task(&apos;imagemin&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/img/*.&#123;png,jpg,gif,ico&#125;&apos;)</div><div class="line">	.pipe(imagemin())</div><div class="line">	.pipe(gulp.dest(&apos;dist/img&apos;))</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>雪碧图</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// image 雪碧图</div><div class="line">gulp.task(&apos;imgspriter&apos;, function()&#123;</div><div class="line">	gulp.src(&apos;src/icon/*.png&apos;)</div><div class="line">	.pipe(imgspriter(&#123;</div><div class="line">		imgName:&apos;sprite.png&apos;,  </div><div class="line">        cssName:&apos;css/icon.css&apos;,  </div><div class="line">        padding:5,  </div><div class="line">        algorithm:&apos;binary-tree&apos;    </div><div class="line">	&#125;))</div><div class="line">	.pipe(gulp.dest(&apos;dist/spriter&apos;))</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 
       
 
@@ -225,7 +392,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">gulp  构建工具</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">gulp</a>
         		</li>
       		
 		</ul>
@@ -401,7 +568,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">gulp  构建工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">gulp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
               </li>
             
             <div class="clearfix"></div>
@@ -453,27 +624,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="https://github.com/xiaqijian" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>GitHub</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+              <a href="http://www.jianshu.com/u/72f4b2353d41" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>简书</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+              <a href="http://weibo.com/xiaduntian" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>微博</a>
             </li>
           
         </ul>
@@ -484,7 +643,7 @@
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">前端开发一枚，联系QQ：2817062995</div>
   	  	
     	</section>
     
