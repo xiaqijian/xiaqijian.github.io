@@ -6,33 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://xiaqijian.github.io">
-  <title>vue-component使用 | 夏其建xiaqijian博客</title>
+  <title>vue-cli小结 | 夏其建xiaqijian博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在component里面有多种情况，其实很多情况下都是从别的组件导入此组件
+  <meta name="description" content="如何利用官方的脚手架工具构建vue项目
+首先要安装node.js
+利用nodejs里面的安装包管理工具npm
+安装脚手架工具vue-cli
 
-导入组件本组件写
-123&amp;lt;script&amp;gt;const heard = &amp;#123; template: &amp;apos;&amp;lt;div&amp;gt;this is heardComponent&amp;lt;/div&amp;gt;&amp;apos; &amp;#125;&amp;lt;/script&amp;gt;
-导入组件
-123&amp;lt;script&amp;gt;im">
+123456789$ npm install -g vue-cli            //全局安装vue-cli$ vue init webpack projectName     //生成projectName为项目名的模板,这个名字可以自己写$ cd">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue-component使用">
-<meta property="og:url" content="https://xiaqijian.github.io/2017/03/29/vue-component使用/index.html">
+<meta property="og:title" content="vue-cli小结">
+<meta property="og:url" content="https://xiaqijian.github.io/2017/03/31/vue-cli小结/index.html">
 <meta property="og:site_name" content="夏其建xiaqijian博客">
-<meta property="og:description" content="在component里面有多种情况，其实很多情况下都是从别的组件导入此组件
+<meta property="og:description" content="如何利用官方的脚手架工具构建vue项目
+首先要安装node.js
+利用nodejs里面的安装包管理工具npm
+安装脚手架工具vue-cli
 
-导入组件本组件写
-123&amp;lt;script&amp;gt;const heard = &amp;#123; template: &amp;apos;&amp;lt;div&amp;gt;this is heardComponent&amp;lt;/div&amp;gt;&amp;apos; &amp;#125;&amp;lt;/script&amp;gt;
-导入组件
-123&amp;lt;script&amp;gt;im">
-<meta property="og:updated_time" content="2017-03-29T05:38:35.382Z">
+123456789$ npm install -g vue-cli            //全局安装vue-cli$ vue init webpack projectName     //生成projectName为项目名的模板,这个名字可以自己写$ cd">
+<meta property="og:updated_time" content="2017-03-31T03:18:54.089Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue-component使用">
-<meta name="twitter:description" content="在component里面有多种情况，其实很多情况下都是从别的组件导入此组件
+<meta name="twitter:title" content="vue-cli小结">
+<meta name="twitter:description" content="如何利用官方的脚手架工具构建vue项目
+首先要安装node.js
+利用nodejs里面的安装包管理工具npm
+安装脚手架工具vue-cli
 
-导入组件本组件写
-123&amp;lt;script&amp;gt;const heard = &amp;#123; template: &amp;apos;&amp;lt;div&amp;gt;this is heardComponent&amp;lt;/div&amp;gt;&amp;apos; &amp;#125;&amp;lt;/script&amp;gt;
-导入组件
-123&amp;lt;script&amp;gt;im">
+123456789$ npm install -g vue-cli            //全局安装vue-cli$ vue init webpack projectName     //生成projectName为项目名的模板,这个名字可以自己写$ cd">
   
     <link rel="alternative" href="/atom.xml" title="夏其建xiaqijian博客" type="application/atom+xml">
   
@@ -166,41 +166,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-vue-component使用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-vue-cli小结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      vue-component使用
+      vue-cli小结
     </h1>
   
 
         
-        <a href="/2017/03/29/vue-component使用/" class="archive-article-date">
-  	<time datetime="2017-03-29T05:38:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-29</time>
+        <a href="/2017/03/31/vue-cli小结/" class="archive-article-date">
+  	<time datetime="2017-03-31T03:18:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在component里面有多种情况，其实很多情况下都是从别的组件导入此组件</p>
-<ol>
-<li><p>导入组件<br>本组件写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">const heard = &#123; template: &apos;&lt;div&gt;this is heardComponent&lt;/div&gt;&apos; &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-<p>导入组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">import heard from &apos;./components/heard.vue&apos;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>注册component<br>全局注册组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">import Vue from &apos;vue&apos;</div><div class="line">Vue.component (&apos;heard&apos;,&#123;</div><div class="line">    template: heard</div><div class="line">&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-</li>
+        <h4 id="如何利用官方的脚手架工具构建vue项目"><a href="#如何利用官方的脚手架工具构建vue项目" class="headerlink" title="如何利用官方的脚手架工具构建vue项目"></a>如何利用官方的脚手架工具构建vue项目</h4><ol>
+<li>首先要安装node.js</li>
+<li>利用nodejs里面的安装包管理工具npm</li>
+<li>安装脚手架工具vue-cli</li>
 </ol>
-<p>局部注册component<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">new Vue (&#123;</div><div class="line">    el:&apos;#app&apos;,</div><div class="line">    components: &#123;</div><div class="line">        &apos;heard&apos;: heard</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>使用component<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// xxx.vue 文件里面使用</div><div class="line">&lt;div id=&quot;app&quot;&gt;</div><div class="line">    &lt;heard&gt;&lt;/heard</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></li>
-</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ npm install -g vue-cli            //全局安装vue-cli</div><div class="line"></div><div class="line">$ vue init webpack projectName     //生成projectName为项目名的模板,这个名字可以自己写</div><div class="line"></div><div class="line">$ cd projectName</div><div class="line"></div><div class="line">$ npm install        //初始化安装npm</div><div class="line"></div><div class="line">$</div></pre></td></tr></table></figure>
+<h4 id="以上方法就可以在电脑上看到为projectName名字的文件夹"><a href="#以上方法就可以在电脑上看到为projectName名字的文件夹" class="headerlink" title="以上方法就可以在电脑上看到为projectName名字的文件夹"></a>以上方法就可以在电脑上看到为projectName名字的文件夹</h4><p>4.运行这个项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run dev            //运行vue项目</div></pre></td></tr></table></figure>
+<h5 id="以上步骤在浏览器中输入：http-localhost-8080-就可以访问首页了"><a href="#以上步骤在浏览器中输入：http-localhost-8080-就可以访问首页了" class="headerlink" title="以上步骤在浏览器中输入：http://localhost:8080      //就可以访问首页了"></a>以上步骤在浏览器中输入：<a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a>      //就可以访问首页了</h5><h3 id="想要在服务器上面运行"><a href="#想要在服务器上面运行" class="headerlink" title="想要在服务器上面运行"></a>想要在服务器上面运行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run bulid</div></pre></td></tr></table></figure>
+<p>以上内容参考： <a href="http://www.qdfuns.com/notes/15904/fbb4d15b9c22fd373b605805bde8fd44.html" target="_blank" rel="external">http://www.qdfuns.com/notes/15904/fbb4d15b9c22fd373b605805bde8fd44.html</a></p>
 
       
 
@@ -233,18 +228,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/29/vue-router使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          vue-router使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/03/29/gulp总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gulp总结</div>
+    <a href="/2017/03/29/vue-router使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vue-router使用</div>
       <i class="icon-circle-right"></i>
     </a>
   
