@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="google-site-verification" content="hCSsq932nmFCHdOQeRapTAsPFYsSWYfPSDmreDcFRrI" />
+
+
+
+  <meta name="description" content="koa,express,node 简化版连接MongoDB"/>
+
+
+
+
+  <meta name="keywords" content="xiaqijian,xiaduntian,lass,夏其建的博客,夏顿天博客,lassblog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiaduntian blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.2" />
+
+
+
+<link rel="canonical" href="https://blog.zhinenganquan.cn/2018/11/16/Untitledkoa-express-node-简化版连接MongoDB/"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.2" />
+
+
+
+  
+  <script id="baidu_analytics">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e5721c2974c3c413d048a19a357c2112";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=117905561"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '117905561');
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz",
+      appKey: "hcvXvq3frez96hAA9UE5Gjrm"
+    });
+  </script>
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":"Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz","app_key":"hcvXvq3frez96hAA9UE5Gjrm"},"toc":true,"fancybox":false,"pjax":true};
+</script>
+
+    <title> koa,express,node 简化版连接MongoDB - xiaduntian blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">xiaduntian blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">xiaduntian blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          koa,express,node 简化版连接MongoDB
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-16
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/前端/">前端</a>
+            
+              <a href="/categories/前端/开发/">开发</a>
+            
+              <a href="/categories/前端/开发/数据库/">数据库</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/16/Untitledkoa-express-node-简化版连接MongoDB/"
+             data-title="koa,express,node 简化版连接MongoDB">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-连接MongoDB"><span class="toc-text">1.连接MongoDB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置需要操作的集合"><span class="toc-text">2.设置需要操作的集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-设置服务器"><span class="toc-text">3.设置服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-启动服务器"><span class="toc-text">4.启动服务器</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>这个方法，node，express，koa连接MongoDB都是一样的方法，我们利用mongoose模块来连接</p>
+<p>关于连接mysql看这篇文章 : <a href="/2018/11/16/koa-express-node-通用方法连接MySQL/">koa,express,node 通用方法连接MySQL</a></p>
+<p>这里只是简单列一下连接MongoDB的结构，其实要真正懂MongoDB，还需要很多知识点，比如MongoDB的数据类型，还有一些API操作</p>
+<a id="more"></a>
+<p>简单说一下MongoDB的结构</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-bc0d30313f4f91b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>其他内容下次，分享，今天先连上😂</p>
+<hr>
+<p>注意我的版本</p>
+<p>这是我的目录<br><img src="https://upload-images.jianshu.io/upload_images/1379609-055c91e26d2fa715.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我的安装的依赖版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;koa&quot;: &quot;^2.6.2&quot;,</span><br><span class="line">    &quot;mongoose&quot;: &quot;^5.3.12&quot;,</span><br><span class="line">  &#125;`</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-连接MongoDB"><a href="#1-连接MongoDB" class="headerlink" title="1.连接MongoDB"></a>1.连接MongoDB</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// db/db.js</span><br><span class="line">const mongoose = require(&apos;mongoose&apos;)</span><br><span class="line"></span><br><span class="line">const DB_URL = &apos;mongodb://localhost:27017/local&apos;</span><br><span class="line"></span><br><span class="line">mongoose.connect(DB_URL)</span><br><span class="line"></span><br><span class="line">mongoose.connection.on(&apos;connected&apos;,function() &#123;</span><br><span class="line">   console.log(&apos;Mongoose connection open to &apos;+DB_URL);</span><br><span class="line">&#125;);</span><br><span class="line">/**</span><br><span class="line">* 连接异常 error 数据库连接错误</span><br><span class="line">*/</span><br><span class="line">mongoose.connection.on(&apos;error&apos;,function(err) &#123;</span><br><span class="line">  console.log(&apos;Mongoose connection error: &apos;+ err);</span><br><span class="line">&#125;);</span><br><span class="line">/**</span><br><span class="line">* 连接断开 disconnected 连接异常断开</span><br><span class="line">*/</span><br><span class="line">mongoose.connection.on(&apos;disconnected&apos;,function() &#123;</span><br><span class="line">  console.log(&apos;Mongoose connection disconnected&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">module.exports = mongoose</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<h2 id="2-设置需要操作的集合"><a href="#2-设置需要操作的集合" class="headerlink" title="2.设置需要操作的集合"></a>2.设置需要操作的集合</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// db/index.js</span><br><span class="line">const mongoose = require(&apos;./db&apos;)</span><br><span class="line">const Schema = mongoose.Schema;</span><br><span class="line"></span><br><span class="line">const ceshiSchema = new Schema(&#123;</span><br><span class="line">  title: String,</span><br><span class="line">  body: String,</span><br><span class="line">  date: Date</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const MyModel = mongoose.model(&apos;ceshi&apos;, ceshiSchema);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Mongodb &#123;</span><br><span class="line">  constructor () &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">// 查询</span><br><span class="line">  query () &#123;</span><br><span class="line">     return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">       MyModel.find(&#123;&#125;, (err, res) =&gt; &#123;</span><br><span class="line">         if(err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">// 保存</span><br><span class="line">  save (obj) &#123;</span><br><span class="line">     const m = new MyModel(obj)</span><br><span class="line">     return new Promise((resolve, reject)=&gt; &#123;</span><br><span class="line">       m.save((err, res) =&gt; &#123;</span><br><span class="line">         if (err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">         console.log(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">     </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = new Mongodb()</span><br></pre></td></tr></table></figure>
+<p>这里就简单举例了查询和保存方法，还是其他方法，可以具体去看文档</p>
+<h2 id="3-设置服务器"><a href="#3-设置服务器" class="headerlink" title="3.设置服务器"></a>3.设置服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">const Koa = require(&apos;koa&apos;)</span><br><span class="line">const config = require(&apos;./config/default&apos;)</span><br><span class="line">const ModelDb = require(&apos;./db&apos;)</span><br><span class="line"></span><br><span class="line">const app =  new Koa()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.use(async (ctx) =&gt; &#123;</span><br><span class="line">     let data = await ModelDb.query()</span><br><span class="line">    ctx.body = data</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.listen(config.port)</span><br><span class="line"></span><br><span class="line">console.log(`listening on port $&#123;config.port&#125;`)</span><br></pre></td></tr></table></figure>
+<h2 id="4-启动服务器"><a href="#4-启动服务器" class="headerlink" title="4.启动服务器"></a>4.启动服务器</h2><p>打开浏览器，就可以看的查询出来的结果</p>
+<p>注意：前提在ceshi结合要有文档，也就是要有数据</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://blog.zhinenganquan.cn">xiaqijian</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://blog.zhinenganquan.cn/2018/11/16/Untitledkoa-express-node-简化版连接MongoDB/">https://blog.zhinenganquan.cn/2018/11/16/Untitledkoa-express-node-简化版连接MongoDB/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/koa/">koa</a>
+            
+              <a href="/tags/node/">node</a>
+            
+              <a href="/tags/MongoDB/">MongoDB</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/22/管理多个git生成的ssh-key/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">管理多个git生成的ssh key</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/16/koa-express-node-通用方法连接MySQL/">
+        <span class="next-text nav-default">koa,express,node 通用方法连接MySQL</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:xiaqijian009@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/xiaqijian" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">xiaqijian</span> 
+    <a class="theme-link" href="http://beian.miit.gov.cn">浙ICP备16027119号-1</a>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.2"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="google-site-verification" content="hCSsq932nmFCHdOQeRapTAsPFYsSWYfPSDmreDcFRrI" />
+
+
+
+  <meta name="description" content="Vultr修改SSH端口"/>
+
+
+
+
+  <meta name="keywords" content="xiaqijian,xiaduntian,lass,夏其建的博客,夏顿天博客,lassblog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiaduntian blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.2" />
+
+
+
+<link rel="canonical" href="https://blog.zhinenganquan.cn/2019/02/12/Vultr修改SSH端口/"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.2" />
+
+
+
+  
+  <script id="baidu_analytics">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e5721c2974c3c413d048a19a357c2112";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=117905561"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '117905561');
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz",
+      appKey: "hcvXvq3frez96hAA9UE5Gjrm"
+    });
+  </script>
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":"Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz","app_key":"hcvXvq3frez96hAA9UE5Gjrm"},"toc":true,"fancybox":false,"pjax":true};
+</script>
+
+    <title> Vultr修改SSH端口 - xiaduntian blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">xiaduntian blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">xiaduntian blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Vultr修改SSH端口
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-02-12
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/服务器/">服务器</a>
+            
+              <a href="/categories/服务器/ssh/">ssh</a>
+            
+              <a href="/categories/服务器/ssh/转载/">转载</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2019/02/12/Vultr修改SSH端口/"
+             data-title="Vultr修改SSH端口">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH远程登陆Vultr"><span class="toc-text">SSH远程登陆Vultr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改Vultr-SSH端口配置文件"><span class="toc-text">修改Vultr SSH端口配置文件</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>Vultr的默认SSH端口是22，也就是一般通用默认的SSH端口。这样的设置方便记忆，但是安全性可能不高。那么如果你想提高安全性，或者SSH端口被封了，如何修改这个Vultr默认的SSH端口呢？本文就介绍下Vultr如何修改SSH端口。</p>
+<a id="more"></a>
+<h2 id="SSH远程登陆Vultr"><a href="#SSH远程登陆Vultr" class="headerlink" title="SSH远程登陆Vultr"></a>SSH远程登陆Vultr</h2><p>首先，需要先SSH远程登陆到Vultr服务器，</p>
+<p>如何SSH没有被封，则可以通过ssh相关工具登录，例如：git</p>
+<ul>
+<li><a href="https://www.vultryhw.cn/vultr-ssh-login/" target="_blank" rel="noopener">Windows/Mac/Linux如何SSH远程连接/登陆Vultr</a></li>
+<li><a href="https://www.vultryhw.cn/vultr-ssh-online/" target="_blank" rel="noopener">Vultr自带SSH登陆工具 在线SSH远程登陆</a></li>
+</ul>
+<p>如果SSH已经被封了，则可以根据Vultr自带SSH登陆工具 在线SSH远程登陆用Vultr自带的SSH工具远程登陆到VPS。</p>
+<h2 id="修改Vultr-SSH端口配置文件"><a href="#修改Vultr-SSH端口配置文件" class="headerlink" title="修改Vultr SSH端口配置文件"></a>修改Vultr SSH端口配置文件</h2><p>Vultr的SSH端口配置文件为/etc/ssh/sshd_config，因此使用VIM编辑器修改这个配置文件中的SSH端口，命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>之后找到SSH端口的那一项（即Port对应的那个值），修改成你想要设置的值，例如我这里设置为2222：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1379609-dc5eaf52c4aa6612.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Vultr修改SSH端口"></p>
+<p>（VIM编辑器如果不会使用可以参考：<a href="https://www.vultryhw.cn/vultr-how-to-use-vim/" target="_blank" rel="noopener">Vultr使用VIM编辑器修改及新建文件</a>）</p>
+<p>之后重启SSH服务即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+<p>如果提示命令不存在，则执行执行reboot命令重启服务器即可。重启完毕后，你Vultr的SSH端口就改变成功了。</p>
+<p>转载：<a href="https://www.vultryhw.cn/vultr-change-ssh-port/" target="_blank" rel="noopener">https://www.vultryhw.cn/vultr-change-ssh-port/</a></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://blog.zhinenganquan.cn">xiaqijian</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://blog.zhinenganquan.cn/2019/02/12/Vultr修改SSH端口/">https://blog.zhinenganquan.cn/2019/02/12/Vultr修改SSH端口/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/服务器/">服务器</a>
+            
+              <a href="/tags/vultr/">vultr</a>
+            
+              <a href="/tags/端口/">端口</a>
+            
+              <a href="/tags/ssh/">ssh</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/02/16/Windows10家庭版的功能中没有Hyper-V的解决方法/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Windows10家庭版的功能中没有Hyper-V的解决方法</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/02/01/使用sftp方式上传hexo网站到服务器/">
+        <span class="next-text nav-default">使用sftp方式上传hexo网站到服务器</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:xiaqijian009@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/xiaqijian" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">xiaqijian</span> 
+    <a class="theme-link" href="http://beian.miit.gov.cn">浙ICP备16027119号-1</a>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.2"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":true},"log":false});</script></body>
+</html>

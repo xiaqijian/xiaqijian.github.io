@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="google-site-verification" content="hCSsq932nmFCHdOQeRapTAsPFYsSWYfPSDmreDcFRrI" />
+
+
+
+  <meta name="description" content="koa2系列教程：koa2应用初见"/>
+
+
+
+
+  <meta name="keywords" content="xiaqijian,xiaduntian,lass,夏其建的博客,夏顿天博客,lassblog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiaduntian blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.2" />
+
+
+
+<link rel="canonical" href="https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2应用初见/"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.2" />
+
+
+
+  
+  <script id="baidu_analytics">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e5721c2974c3c413d048a19a357c2112";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=117905561"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '117905561');
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz",
+      appKey: "hcvXvq3frez96hAA9UE5Gjrm"
+    });
+  </script>
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":"Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz","app_key":"hcvXvq3frez96hAA9UE5Gjrm"},"toc":true,"fancybox":false,"pjax":true};
+</script>
+
+    <title> koa2系列教程：koa2应用初见 - xiaduntian blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">xiaduntian blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">xiaduntian blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          koa2系列教程：koa2应用初见
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-02-01
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/koa2/">koa2</a>
+            
+              <a href="/categories/koa2/前端/">前端</a>
+            
+              <a href="/categories/koa2/前端/开发/">开发</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/02/01/koa2系列教程：koa2应用初见/"
+             data-title="koa2系列教程：koa2应用初见">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例：简单利用koa2搭建服务器"><span class="toc-text">案例：简单利用koa2搭建服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件夹结构："><span class="toc-text">文件夹结构：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐node项目工具"><span class="toc-text">推荐node项目工具</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <hr>
+<p>这篇教程主要介绍koa2构建服务器，简单引用</p>
+<p>本教程的版本：要格外注意版本号</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-a1e416b4facf2a89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<a id="more"></a>
+<h2 id="案例：简单利用koa2搭建服务器"><a href="#案例：简单利用koa2搭建服务器" class="headerlink" title="案例：简单利用koa2搭建服务器"></a>案例：简单利用koa2搭建服务器</h2><h4 id="文件夹结构："><a href="#文件夹结构：" class="headerlink" title="文件夹结构："></a>文件夹结构：</h4><p><img src="https://upload-images.jianshu.io/upload_images/1379609-acd3bcd167b1b086.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line"></span><br><span class="line">const Koa = require(&apos;koa&apos;)</span><br><span class="line">const app = new Koa()</span><br><span class="line"></span><br><span class="line">app.use(async (ctx) =&gt; &#123;</span><br><span class="line">    ctx.body = &apos;hello world&apos;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(3000)</span><br><span class="line"></span><br><span class="line">console.log(&apos;localhost:3000&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>利用<code>node index.js</code>就可以启动了，在浏览器中输入localhost:3000</p>
+<p>源码地址：<a href="https://github.com/xiaqijian/koa2-lessons/tree/master/lesson1" target="_blank" rel="noopener">https://github.com/xiaqijian/koa2-lessons/tree/master/lesson1</a></p>
+<p>本片就结束了</p>
+<h2 id="推荐node项目工具"><a href="#推荐node项目工具" class="headerlink" title="推荐node项目工具"></a>推荐node项目工具</h2><ul>
+<li>编辑器   visualstudio <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">下载</a></li>
+<li>用yarn代替npm <a href="https://yarnpkg.com/zh-Hans/docs/install" target="_blank" rel="noopener">下载</a></li>
+</ul>
+<hr>
+<p>首发于微信公众号：node前端</p>
+<p>不妨关注一下</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://blog.zhinenganquan.cn">xiaqijian</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2应用初见/">https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2应用初见/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/koa2/">koa2</a>
+            
+              <a href="/tags/教程/">教程</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/02/01/koa2系列教程：koa2处理静态文件/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">koa2系列教程：koa2处理静态文件</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/02/01/koa2系列教程：综合koa2搭建登录注册页面/">
+        <span class="next-text nav-default">koa2系列教程：综合koa2搭建登录注册页面</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:xiaqijian009@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/xiaqijian" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">xiaqijian</span> 
+    <a class="theme-link" href="http://beian.miit.gov.cn">浙ICP备16027119号-1</a>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.2"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":true},"log":false});</script></body>
+</html>

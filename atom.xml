@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>xiaduntian blog</title>
+  
+  <subtitle>夏其建博客,夏顿天博客</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://blog.zhinenganquan.cn/"/>
+  <updated>2019-12-25T02:35:36.317Z</updated>
+  <id>https://blog.zhinenganquan.cn/</id>
+  
+  <author>
+    <name>xiaqijian</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx进行多域名访问不同路径</title>
+    <link href="https://blog.zhinenganquan.cn/2019/05/28/nginx%E8%BF%9B%E8%A1%8C%E5%A4%9A%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/"/>
+    <id>https://blog.zhinenganquan.cn/2019/05/28/nginx进行多域名访问不同路径/</id>
+    <published>2019-05-28T06:16:00.000Z</published>
+    <updated>2019-12-25T02:35:36.317Z</updated>
+    
+    <content type="html"><![CDATA[<p>可能会存在这么几种需求：</p><ol><li>一台服务器，需要不同域名访问不同路径，实现多站点</li><li>一台服务器，只有一个80 端口，实现不同域名，走不同端口</li></ol><p>上面都可以利用转发实现</p><a id="more"></a><p>例如：不同域名走不同目录实现不同站点</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  www.a.com;</span><br><span class="line">        </span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://localhost:83/a/;</span><br><span class="line">        &#125;</span><br><span class="line">        error_page 404 /404.html;</span><br><span class="line">            location = /40x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page 500 502 503 504 /50x.html;</span><br><span class="line">            location = /50x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  www.b.com;</span><br><span class="line">        </span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://localhost:83/b/;</span><br><span class="line">        &#125;</span><br><span class="line">        error_page 404 /404.html;</span><br><span class="line">            location = /40x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page 500 502 503 504 /50x.html;</span><br><span class="line">            location = /50x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       83;</span><br><span class="line">        server_name  www.b.com;</span><br><span class="line">        </span><br><span class="line">        location / &#123;</span><br><span class="line">             root   /app;</span><br><span class="line">             index  index.html index.htm;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        error_page 404 /404.html;</span><br><span class="line">            location = /40x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page 500 502 503 504 /50x.html;</span><br><span class="line">            location = /50x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>  上面就可以进行一台服务器访问实现不同站点</p><p><code>`</code></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;可能会存在这么几种需求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一台服务器，需要不同域名访问不同路径，实现多站点&lt;/li&gt;
+&lt;li&gt;一台服务器，只有一个80 端口，实现不同域名，走不同端口&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;上面都可以利用转发实现&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Nginx" scheme="https://blog.zhinenganquan.cn/categories/Nginx/"/>
+    
+    
+      <category term="Nginx" scheme="https://blog.zhinenganquan.cn/tags/Nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>URL，base64，file之间转换</title>
+    <link href="https://blog.zhinenganquan.cn/2019/05/08/URL%EF%BC%8Cbase64%EF%BC%8Cfile%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2/"/>
+    <id>https://blog.zhinenganquan.cn/2019/05/08/URL，base64，file之间转换/</id>
+    <published>2019-05-08T05:03:00.000Z</published>
+    <updated>2019-12-25T02:35:36.309Z</updated>
+    
+    <content type="html"><![CDATA[<p>图片类型</p><h2 id="URL转base64"><a href="#URL转base64" class="headerlink" title="URL转base64"></a>URL转base64</h2><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function  convertImgToBase64 (url, callback, outputFormat)&#123;</span><br><span class="line">    let canvas = document.createElement(&apos;CANVAS&apos;),</span><br><span class="line">        ctx = canvas.getContext(&apos;2d&apos;),</span><br><span class="line">        img = new Image;</span><br><span class="line">      img.crossOrigin = &apos;Anonymous&apos;;</span><br><span class="line">      img.onload = function()&#123;</span><br><span class="line">          canvas.height = img.height;</span><br><span class="line">          canvas.width = img.width;</span><br><span class="line">          ctx.drawImage(img,0,0);</span><br><span class="line">          let dataURL = canvas.toDataURL(outputFormat || &apos;image/png&apos;);</span><br><span class="line">          callback.call(this, dataURL);</span><br><span class="line">          canvas = null; </span><br><span class="line">      &#125;;</span><br><span class="line">      img.src = url;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure><p>案例</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">convertImgToBase64(&apos;https:///xxxx.png&apos;, function (base64Img) &#123;</span><br><span class="line">        console.log(base64Img)</span><br><span class="line">        </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><h2 id="base64转file"><a href="#base64转file" class="headerlink" title="base64转file"></a>base64转file</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function dataURLtoFile (dataurl, filename) &#123; </span><br><span class="line">    let arr = dataurl.split(&apos;,&apos;),</span><br><span class="line">        mime = arr[0].match(/:(.*?);/)[1],</span><br><span class="line">        bstr = atob(arr[1]),</span><br><span class="line">        n = bstr.length,</span><br><span class="line">        u8arr = new Uint8Array(n);</span><br><span class="line">        while (n--) &#123;</span><br><span class="line">            u8arr[n] = bstr.charCodeAt(n);</span><br><span class="line">        &#125;</span><br><span class="line">        console.log(new File([u8arr], filename, &#123; type: mime &#125;))</span><br><span class="line">        return new File([u8arr], filename, &#123; type: mime &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;图片类型&lt;/p&gt;
+&lt;h2 id=&quot;URL转base64&quot;&gt;&lt;a href=&quot;#URL转base64&quot; class=&quot;headerlink&quot; title=&quot;URL转base64&quot;&gt;&lt;/a&gt;URL转base64&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="https://blog.zhinenganquan.cn/categories/JavaScript/"/>
+    
+    
+      <category term="工具" scheme="https://blog.zhinenganquan.cn/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="JavaScript" scheme="https://blog.zhinenganquan.cn/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx重启出现端口占用解决方案</title>
+    <link href="https://blog.zhinenganquan.cn/2019/04/08/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use/"/>
+    <id>https://blog.zhinenganquan.cn/2019/04/08/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use/</id>
+    <published>2019-04-08T05:10:00.000Z</published>
+    <updated>2019-12-25T02:35:36.317Z</updated>
+    
+    <content type="html"><![CDATA[<p>端口占用问题，就将端口杀死掉</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pkill -f nginx</span><br><span class="line">sudo systemctl start nginx</span><br></pre></td></tr></table></figure><p><a href="https://stackoverflow.com/questions/14972792/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use" target="_blank" rel="noopener">https://stackoverflow.com/questions/14972792/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;端口占用问题，就将端口杀死掉&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2
+      
+    
+    </summary>
+    
+    
+      <category term="nginx" scheme="https://blog.zhinenganquan.cn/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>react路由简易使用</title>
+    <link href="https://blog.zhinenganquan.cn/2019/03/25/react%E8%B7%AF%E7%94%B1%E7%AE%80%E6%98%93%E4%BD%BF%E7%94%A8/"/>
+    <id>https://blog.zhinenganquan.cn/2019/03/25/react路由简易使用/</id>
+    <published>2019-03-25T08:58:00.000Z</published>
+    <updated>2019-12-25T02:35:36.327Z</updated>
+    
+    <content type="html"><![CDATA[<p>react要使用路由需要使用到这个包react-reouter-dom</p><h2 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h2><a id="more"></a><p>下面是在create-react-app 项目下</p><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-router-dom</span><br></pre></td></tr></table></figure><h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h3><p>app.js</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123;Component&#125; from &apos;react&apos;</span><br><span class="line">import &#123;HashRouter as Router, Route, Link, Switch&#125; from &apos;react-router-dom&apos;</span><br><span class="line"></span><br><span class="line">const Home = () =&gt; (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;首页&lt;/h2&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br><span class="line">const About = () =&gt; (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;关于&lt;/h2&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">class App extends Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;Router&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;</span><br><span class="line">              &lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt;</span><br><span class="line">            &lt;/li&gt;</span><br><span class="line">            &lt;li&gt;</span><br><span class="line">              &lt;Link to=&quot;/about&quot;&gt;关于&lt;/Link&gt;</span><br><span class="line">            &lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">          &lt;Switch&gt;</span><br><span class="line">            &lt;Route exact path=&quot;/&quot; component=&#123;Home&#125; /&gt;</span><br><span class="line">            &lt;Route path=&quot;/about&quot; component=&#123;About&#125; /&gt;</span><br><span class="line">          &lt;/Switch&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/Router&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App</span><br></pre></td></tr></table></figure><p>就可以了</p><p><img src="https://user-gold-cdn.xitu.io/2018/5/24/1639125e4de0f695?imageslim" alt="img"></p><h2 id="react-router-和-react-router-dom-区别"><a href="#react-router-和-react-router-dom-区别" class="headerlink" title="react-router 和 react-router-dom 区别"></a>react-router 和 react-router-dom 区别</h2><p>react-router-dom依赖react-router，所以我们使用npm安装依赖的时候，只需要安装相应环境下的库即可，不用再显式安装react-router。</p><ul><li>基于浏览器环境的开发，只需要安装react-router-dom；</li><li><p>基于react-native环境的开发，只需要安装react-router-native。</p><p>npm会自动解析react-router-dom包中package.json的依赖并安装。</p></li></ul><p>react-router-dom中package.json依赖:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;history&quot;: &quot;^4.7.2&quot;,</span><br><span class="line">    &quot;invariant&quot;: &quot;^2.2.2&quot;,</span><br><span class="line">    &quot;loose-envify&quot;: &quot;^1.3.1&quot;,</span><br><span class="line">    &quot;prop-types&quot;: &quot;^15.5.4&quot;,</span><br><span class="line">    &quot;react-router&quot;: &quot;^4.2.0&quot;,</span><br><span class="line">    &quot;warning&quot;: &quot;^3.0.0&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><p>安装了react-router-dom，npm会解析并安装上述依赖包。可以看到，其中包括react-router。</p><p>参考链接：<a href="https://github.com/mrdulin/blog/issues/42" target="_blank" rel="noopener">https://github.com/mrdulin/blog/issues/42</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;react要使用路由需要使用到这个包react-reouter-dom&lt;/p&gt;
+&lt;h2 id=&quot;使用教程&quot;&gt;&lt;a href=&quot;#使用教程&quot; class=&quot;headerlink&quot; title=&quot;使用教程&quot;&gt;&lt;/a&gt;使用教程&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/categories/react/"/>
+    
+      <category term="react-router" scheme="https://blog.zhinenganquan.cn/categories/react/react-router/"/>
+    
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/tags/react/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx重启出现/run/nginx.pid文件丢失</title>
+    <link href="https://blog.zhinenganquan.cn/2019/03/19/nginx-error-open-run-nginx-pid-failed-2-No-such-file-or-directory/"/>
+    <id>https://blog.zhinenganquan.cn/2019/03/19/nginx-error-open-run-nginx-pid-failed-2-No-such-file-or-directory/</id>
+    <published>2019-03-19T02:15:00.000Z</published>
+    <updated>2019-12-25T02:35:36.317Z</updated>
+    
+    <content type="html"><![CDATA[<p>当你执行sudo nginx -s reload时出现<code>nginx: [error] open() &quot;/run/nginx.pid&quot; failed (2: No such file or directory)</code>，说明由于你操作不当，部分文件丢失<br>解决方法：</p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/nginx.conf （其中/etc/nginx/nginx.conf 是你的nginx.conf的文</span><br><span class="line">件路径）</span><br></pre></td></tr></table></figure><p>然后在执行<code>sudo nginx -s reload</code>就可以了</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当你执行sudo nginx -s reload时出现&lt;code&gt;nginx: [error] open() &amp;quot;/run/nginx.pid&amp;quot; failed (2: No such file or directory)&lt;/code&gt;，说明由于你操作不当，部分文件丢失&lt;br&gt;解决方法：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="nginx" scheme="https://blog.zhinenganquan.cn/categories/nginx/"/>
+    
+    
+      <category term="nginx" scheme="https://blog.zhinenganquan.cn/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>node版本管理工具-window</title>
+    <link href="https://blog.zhinenganquan.cn/2019/03/14/node%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-window/"/>
+    <id>https://blog.zhinenganquan.cn/2019/03/14/node版本管理工具-window/</id>
+    <published>2019-03-14T01:48:00.000Z</published>
+    <updated>2019-12-25T02:35:36.318Z</updated>
+    
+    <content type="html"><![CDATA[<p>经常需要不同版本的node，有些不兼容，需要切换</p><h2 id="window"><a href="#window" class="headerlink" title="window"></a>window</h2><p>工具有很多</p><ul><li>nvm</li><li>n</li></ul><a id="more"></a><h3 id="1-下载nvm"><a href="#1-下载nvm" class="headerlink" title="1.下载nvm"></a>1.下载nvm</h3><p>下载 <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows</a></p><h4 id="安装node对应的版本"><a href="#安装node对应的版本" class="headerlink" title="安装node对应的版本"></a>安装node对应的版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install v10.15.3</span><br></pre></td></tr></table></figure><h4 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h4><p>nvm for windows是一个命令行工具，在控制台输入<code>nvm</code>,就可以看到它的命令用法。基本命令有：</p><ul><li><code>nvm arch [32|64]</code> ： 显示node是运行在32位还是64位模式。指定32或64来覆盖默认体系结构。</li><li><code>nvm install &lt;version&gt; [arch]</code>： 该<version style="margin: 0px; padding: 0px;">可以是node.js版本或最新稳定版本<code>latest</code>。（可选[arch]）指定安装32位或64位版本（默认为系统arch）。设置[arch]为<code>all</code>以安装32和64位版本。在命令后面添加<code>--insecure</code> ，可以绕过远端下载服务器的SSL验证。</version></li><li><code>nvm list [available]</code>： 列出已经安装的node.js版本。可选的available，显示可下载版本的部分列表。这个命令可以简写为<code>nvm ls [available]</code>。</li><li><code>nvm on</code>： 启用node.js版本管理。</li><li><code>nvm off</code>： 禁用node.js版本管理(不卸载任何东西)</li><li><code>nvm proxy [url]</code>： 设置用于下载的代理。留<code>[url]</code>空白，以查看当前的代理。设置<code>[url]</code>为<code>none</code>删除代理。</li><li><code>nvm node_mirror [url]</code>：设置node镜像，默认为<code>https://nodejs.org/dist/.</code>。我建议设置为淘宝的镜像<em><a href="https://npm.taobao.org/mirrors/node/" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/node/</a></em></li><li><code>nvm npm_mirror [url]</code>：设置npm镜像，默认为<code>https://github.com/npm/npm/archive/</code>。我建议设置为淘宝的镜像<em><a href="https://npm.taobao.org/mirrors/npm/" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/npm/</a></em></li><li><code>nvm uninstall &lt;version&gt;</code>： 卸载指定版本的nodejs。</li><li><code>nvm use [version] [arch]</code>： 切换到使用指定的nodejs版本。可以指定32/64位[arch]。<code>nvm use &lt;arch&gt;</code>将继续使用所选版本，但根据提供的值切换到32/64位模式的<code>&lt;arch&gt;</code></li><li><code>nvm root [path]</code>： 设置 nvm 存储node.js不同版本的目录 ,如果<path style="margin: 0px; padding: 0px;"></path>未设置，将使用当前目录。</li><li><code>nvm version</code>： 显示当前运行的nvm版本，可以简写为<code>nvm v</code></li></ul><h3 id="2-配置-npm-全局安装路径"><a href="#2-配置-npm-全局安装路径" class="headerlink" title="2.配置 npm 全局安装路径"></a>2.配置 npm 全局安装路径</h3><p>执行下面的命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set prefix &quot;E:\nodejs\npm-global&quot;</span><br></pre></td></tr></table></figure><p><code>C:\\Users\\你的用户名\\</code> 会生成个 <code>.npmrc</code> 文件，内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prefix=E:\nodejs\npm-global</span><br></pre></td></tr></table></figure><p>去装些全局的东西 <code>npm install vue -g</code>.<br>全局的所有包都在这：<code>E:\nodejs\npm-global\node_modules</code></p><p><code>设置——系统——关于——系统信息——高级程序设置——环境变量——xxx用户的变量</code><br>修改环境变量，将 <code>C:\\Users\\你的用户名\\AppData\\Roaming\\npm</code> 修改为 <code>PATH E:\\nodejs\\npm-global</code>.</p><h3 id="3-安装-cnpm"><a href="#3-安装-cnpm" class="headerlink" title="3. 安装 cnpm"></a>3. 安装 <a href="https://npm.taobao.org/" target="_blank" rel="noopener">cnpm</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br><span class="line">npm install -g cnpm --registry=http://r.cnpmjs.org</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;经常需要不同版本的node，有些不兼容，需要切换&lt;/p&gt;
+&lt;h2 id=&quot;window&quot;&gt;&lt;a href=&quot;#window&quot; class=&quot;headerlink&quot; title=&quot;window&quot;&gt;&lt;/a&gt;window&lt;/h2&gt;&lt;p&gt;工具有很多&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nvm&lt;/li&gt;
+&lt;li&gt;n&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="node" scheme="https://blog.zhinenganquan.cn/categories/node/"/>
+    
+      <category term="nvm" scheme="https://blog.zhinenganquan.cn/categories/node/nvm/"/>
+    
+    
+      <category term="node" scheme="https://blog.zhinenganquan.cn/tags/node/"/>
+    
+      <category term="nvm" scheme="https://blog.zhinenganquan.cn/tags/nvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>react脚手架使用</title>
+    <link href="https://blog.zhinenganquan.cn/2019/03/13/react%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BD%BF%E7%94%A8/"/>
+    <id>https://blog.zhinenganquan.cn/2019/03/13/react脚手架使用/</id>
+    <published>2019-03-13T07:16:00.000Z</published>
+    <updated>2019-12-25T02:35:36.327Z</updated>
+    
+    <content type="html"><![CDATA[<p>开始之前，看看react有哪些常用的脚手架</p><ul><li><a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener">create-react-app</a></li><li>generator-z-react-cli</li></ul><p>其中create-react-app 是最常用 的脚手架</p><a id="more"></a><h2 id="create-react-app使用"><a href="#create-react-app使用" class="headerlink" title="create-react-app使用"></a>create-react-app使用</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><p>全局安装</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g create-react-app</span><br></pre></td></tr></table></figure><h3 id="2-创建项目"><a href="#2-创建项目" class="headerlink" title="2.创建项目"></a>2.创建项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-react-app my-app</span><br></pre></td></tr></table></figure><p>目录</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">my-app</span><br><span class="line">  |--build      //构建目录，遵循发布系统规范</span><br><span class="line">  |   |-- index.html    //静态页面</span><br><span class="line">  |   |-- static        //资源文件</span><br><span class="line">  |</span><br><span class="line">  |-- node_modules      //项目组件文件夹：所有安装的组件都在这</span><br><span class="line">  |</span><br><span class="line">  |--src                //源码目录</span><br><span class="line">  |   |--index.js       //入口文件(还生成了其它的文件，但是没啥用，我们可以直接的删除掉)</span><br><span class="line">  |</span><br><span class="line">  |--public             //静态页面目录</span><br><span class="line">  |   |--index.html     //主页面(还生成了其它的文件，但是没啥用，我们可以直接的删除掉)</span><br><span class="line">  |</span><br><span class="line">  |-- .gitignore        //git提交的忽略文件，我们一般还需要再手动增加.idea(通过webstorm编辑工具进行开发，生成的文件)</span><br><span class="line">  |--package.json   //项目依赖项及项目基础信息</span><br><span class="line">  |--README.md      //项目描述</span><br><span class="line">  |-- ...</span><br></pre></td></tr></table></figure><h3 id="3-运行项目"><a href="#3-运行项目" class="headerlink" title="3.运行项目"></a>3.运行项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd my-app</span><br><span class="line">npm run start</span><br></pre></td></tr></table></figure><h3 id="打开webpack配置"><a href="#打开webpack配置" class="headerlink" title="打开webpack配置"></a>打开webpack配置</h3><p>默认是没打开webpack配置的</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn eject或者npm run eject 此命令执行完成不可逆转(慎重使用)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开始之前，看看react有哪些常用的脚手架&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/facebook/create-react-app&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;create-react-app&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;generator-z-react-cli&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中create-react-app 是最常用 的脚手架&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/categories/react/"/>
+    
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/tags/react/"/>
+    
+      <category term="create-react-app" scheme="https://blog.zhinenganquan.cn/tags/create-react-app/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>react中setState解析</title>
+    <link href="https://blog.zhinenganquan.cn/2019/03/05/react%E4%B8%ADsetState%E8%A7%A3%E6%9E%90/"/>
+    <id>https://blog.zhinenganquan.cn/2019/03/05/react中setState解析/</id>
+    <published>2019-03-05T07:47:00.000Z</published>
+    <updated>2019-12-25T02:35:36.327Z</updated>
+    
+    <content type="html"><![CDATA[<p>在react中调用setState方法之后并不会立马去更新DOM结构，而是先缓存下来</p><a id="more"></a><h2 id="setState使用"><a href="#setState使用" class="headerlink" title="setState使用"></a>setState使用</h2><p>有两种方法，一种常规的使用方法</p><h3 id="常规方法-对象参数"><a href="#常规方法-对象参数" class="headerlink" title="常规方法(对象参数)"></a>常规方法(对象参数)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;</span><br><span class="line">  key1: value1, </span><br><span class="line">  key2: value2</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>这种方式能应付大部分的应用场景，但是看看下面这种情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;</span><br><span class="line">  count: this.state.count + 1</span><br><span class="line">&#125;);</span><br><span class="line">this.setState(&#123;</span><br><span class="line">  count: this.state.count + 1</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><p>最后得到的count却是不可控的。因为<code>setState</code>不会立即改变<code>this.state</code>，而是挂起状态转换，调用<code>setState</code>方法后立即访问<code>this.state</code>可能得到的是旧的值。</p><p>setState方法不会阻塞state更新完毕</p><p>第二个setState可能还没等待第一次的state更新完毕就开始执行了，所以最后count可能只加了1。</p><p>这时setState的第二个参数就派上用场了，第二个参数是state更新完毕的回调函数</p><h3 id="函数方式（函数参数）"><a href="#函数方式（函数参数）" class="headerlink" title="函数方式（函数参数）"></a>函数方式（函数参数）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">this.setState((state, props) =&gt; &#123;</span><br><span class="line">  return &#123;count: state.count + 1&#125;;</span><br><span class="line">&#125;);</span><br><span class="line">this.setState((state, props) =&gt; &#123;</span><br><span class="line">  return &#123;count: state.count + 1&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>每次更新时都会提取出当前的state，进行运算得到新的state，就保证了数据的同步更新。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在react中调用setState方法之后并不会立马去更新DOM结构，而是先缓存下来&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/categories/react/"/>
+    
+    
+      <category term="react" scheme="https://blog.zhinenganquan.cn/tags/react/"/>
+    
+      <category term="react技术揭秘" scheme="https://blog.zhinenganquan.cn/tags/react%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>axios关于请求接收文件</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/27/axios%E5%85%B3%E4%BA%8E%E8%AF%B7%E6%B1%82%E6%8E%A5%E6%94%B6%E6%96%87%E4%BB%B6/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/27/axios关于请求接收文件/</id>
+    <published>2019-02-27T03:05:00.000Z</published>
+    <updated>2019-12-25T02:35:36.311Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于使用axios上传文件和下载文件流的问题，很多都是通用的，代码块</p><a id="more"></a><h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><p>重点是采用multipart/form-data类型，利用formdata传数据</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const paramupdata = new FormData(); //创建form对象</span><br><span class="line">paramupdata.append(&apos;file&apos;, &apos;文件内容&apos;) </span><br><span class="line"></span><br><span class="line">        axios(&#123;</span><br><span class="line">          method: &apos;post&apos;,</span><br><span class="line">          url: &apos;xxxx.api&apos;,</span><br><span class="line">          data: paramupdata,</span><br><span class="line">          headers:&#123;&apos;Content-Type&apos;:&apos;multipart/form-data&apos;&#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        .then((res) =&gt; &#123;</span><br><span class="line">           console.log(res</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch((err) =&gt; &#123;</span><br><span class="line">          console.log(err)</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure><h2 id="下载文件流"><a href="#下载文件流" class="headerlink" title="下载文件流"></a>下载文件流</h2><p>重点是接收数据类型，和返回的数据类型，然后利用a标签下载下来</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// api.js</span><br><span class="line"></span><br><span class="line">// excel导出</span><br><span class="line">export const userExportForExcel = (postdata) =&gt; &#123;</span><br><span class="line">  // </span><br><span class="line">  return new Promise((resolve, reject) =&gt;&#123;</span><br><span class="line">    request(&#123;</span><br><span class="line">     method: &apos;post&apos;,</span><br><span class="line">     url:&apos;xxxx&apos;,</span><br><span class="line">     responseType:&apos;blob&apos;,</span><br><span class="line">     data: qs.stringify(postdata)</span><br><span class="line">   &#125;)</span><br><span class="line">     .then((res) =&gt; &#123;</span><br><span class="line">       resolve(res)</span><br><span class="line">       // that.allorgs = </span><br><span class="line">     &#125;).catch((err) =&gt; &#123;</span><br><span class="line">       reject(err)</span><br><span class="line">     &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>业务代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let res = await userExportForExcel(postdata)</span><br><span class="line">         let blob = new Blob([res.data],&#123;type: res.headers[&apos;content-type&apos;]&#125;);</span><br><span class="line">        let downloadElement = document.createElement(&apos;a&apos;);</span><br><span class="line">        let href = window.URL.createObjectURL(blob); //创建下载的链接</span><br><span class="line">        downloadElement.href = href;</span><br><span class="line">        downloadElement.download = &apos;项目类型.xlsx&apos;; //下载后文件名</span><br><span class="line">        document.body.appendChild(downloadElement);</span><br><span class="line">        downloadElement.click(); //点击下载</span><br><span class="line">        document.body.removeChild(downloadElement); //下载完成移除元素</span><br><span class="line">        window.URL.revokeObjectURL(href); //释放掉blob对象</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于使用axios上传文件和下载文件流的问题，很多都是通用的，代码块&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="代码块" scheme="https://blog.zhinenganquan.cn/categories/%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
+    
+      <category term="技巧" scheme="https://blog.zhinenganquan.cn/categories/%E4%BB%A3%E7%A0%81%E5%9D%97/%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="下载" scheme="https://blog.zhinenganquan.cn/tags/%E4%B8%8B%E8%BD%BD/"/>
+    
+      <category term="axios" scheme="https://blog.zhinenganquan.cn/tags/axios/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>github pages绑定域名</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/26/github-pages%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/26/github-pages绑定域名/</id>
+    <published>2019-02-26T08:26:00.000Z</published>
+    <updated>2019-12-25T02:35:36.312Z</updated>
+    
+    <content type="html"><![CDATA[<p>代建博客就不用说了，将打包好的上传到xxx.github.io</p><p>然后下面几步就可以了</p><a id="more"></a><h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>hexo博客项目中，source文件夹下面添加CNAME文件</p><p>然后内容是你自己的域名</p><p>我的是</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blog.zhinenganquan.cn</span><br></pre></td></tr></table></figure><h2 id="1-绑定域名"><a href="#1-绑定域名" class="headerlink" title="1.绑定域名"></a>1.绑定域名</h2><p>我这里就用阿里云的，我的github pages是xiaqijian.github.io</p><p>先ping xiaqijian.github.io 得到ip</p><p>然后到阿里云的域名解析，解析到你想要的域名</p><p>比如我的</p><p><img src="/images/pasted-1.png" alt="upload successful"></p><h2 id="2-github设置"><a href="#2-github设置" class="headerlink" title="2.github设置"></a>2.github设置</h2><p><img src="/images/pasted-2.png" alt="upload successful"></p><p>如果遇到https 不能勾选，先不要管他，你先保存，过一会儿再去勾选https</p><p>然后访问我的<a href="http://xiaqijian.github.io就会自动跳转https://blog.zhinenganquan.cn" target="_blank" rel="noopener">http://xiaqijian.github.io就会自动跳转https://blog.zhinenganquan.cn</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;代建博客就不用说了，将打包好的上传到xxx.github.io&lt;/p&gt;
+&lt;p&gt;然后下面几步就可以了&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="hexo" scheme="https://blog.zhinenganquan.cn/categories/hexo/"/>
+    
+      <category term="建站" scheme="https://blog.zhinenganquan.cn/categories/hexo/%E5%BB%BA%E7%AB%99/"/>
+    
+    
+      <category term="hexo" scheme="https://blog.zhinenganquan.cn/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git常见的命令</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/25/git%E5%B8%B8%E8%A7%81%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/25/git常见的命令/</id>
+    <published>2019-02-25T06:31:54.000Z</published>
+    <updated>2019-12-25T02:35:36.312Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录经常使用的命令</p><a id="more"></a><h2 id="移除远程仓库源"><a href="#移除远程仓库源" class="headerlink" title="移除远程仓库源"></a>移除远程仓库源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure><h2 id="增加-删除"><a href="#增加-删除" class="headerlink" title="增加/删除"></a>增加/删除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 添加指定文件到暂存区</span><br><span class="line">$ git add [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 添加指定目录到暂存区，包括子目录</span><br><span class="line">$ git add [dir]</span><br><span class="line"></span><br><span class="line"># 添加当前目录的所有文件到暂存区</span><br><span class="line">$ git add .</span><br><span class="line"></span><br><span class="line"># 添加每个变化前，都会要求确认</span><br><span class="line"># 对于同一个文件的多处变化，可以实现分次提交</span><br><span class="line">$ git add -p</span><br><span class="line"></span><br><span class="line"># 删除工作区文件，并且将这次删除放入暂存区</span><br><span class="line">$ git rm [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 停止追踪指定文件，但该文件会保留在工作区</span><br><span class="line">$ git rm --cached [file]</span><br><span class="line"></span><br><span class="line"># 改名文件，并且将这个改名放入暂存区</span><br><span class="line">$ git mv [file-original] [file-renamed]</span><br></pre></td></tr></table></figure><h2 id="代码提交"><a href="#代码提交" class="headerlink" title="代码提交"></a>代码提交</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 提交暂存区到仓库区</span><br><span class="line">$ git commit -m [message]</span><br><span class="line"></span><br><span class="line"># 提交暂存区的指定文件到仓库区</span><br><span class="line">$ git commit [file1] [file2] ... -m [message]</span><br><span class="line"></span><br><span class="line"># 提交工作区自上次commit之后的变化，直接到仓库区</span><br><span class="line">$ git commit -a</span><br><span class="line"></span><br><span class="line"># 提交时显示所有diff信息</span><br><span class="line">$ git commit -v</span><br><span class="line"></span><br><span class="line"># 使用一次新的commit，替代上一次提交</span><br><span class="line"># 如果代码没有任何新变化，则用来改写上一次commit的提交信息</span><br><span class="line">$ git commit --amend -m [message]</span><br><span class="line"></span><br><span class="line"># 重做上一次commit，并包括指定文件的新变化</span><br><span class="line">$ git commit --amend [file1] [file2] ...</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录经常使用的命令&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>利用docker搭建rap2接口文档</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/19/%E5%88%A9%E7%94%A8docker%E6%90%AD%E5%BB%BArap2%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/19/利用docker搭建rap2接口文档/</id>
+    <published>2019-02-19T05:41:00.000Z</published>
+    <updated>2019-12-25T02:35:36.328Z</updated>
+    
+    <content type="html"><![CDATA[<p>这个是一篇转载文章，进行简化了</p><p>转载文章：<a href="https://www.cnblogs.com/rynxiao/p/9080179.html" target="_blank" rel="noopener">https://www.cnblogs.com/rynxiao/p/9080179.html</a></p><a id="more"></a><hr><h2 id="部署自己的rap2服务"><a href="#部署自己的rap2服务" class="headerlink" title="部署自己的rap2服务"></a>部署自己的rap2服务</h2><p>因为rap2在github上面已经开源，而且也提供了部署方案，这里讲一下自己是如何使用<code>docker</code>来进行部署的。</p><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul><li>安装docker</li><li>安装docker-compose</li></ul><p>如果对docker不太熟悉，又想了解一下docker是什么的，不妨看看我之前的<a href="https://www.cnblogs.com/rynxiao/p/8425166.html" target="_blank" rel="noopener">文章</a></p><p>涉及到的两个开源仓库：</p><ul><li>rap2-delos: 后端数据API服务器，基于Koa + MySQL <a href="https://github.com/thx/rap2-delos" target="_blank" rel="noopener">戳这里</a></li><li>rap2-dolores: 前端静态资源，基于React <a href="https://github.com/thx/rap2-dolores" target="_blank" rel="noopener">戳这里</a></li></ul><h2 id="后端部署"><a href="#后端部署" class="headerlink" title="后端部署"></a>后端部署</h2><p>在后端部署方面，在github上已经给出了使用docker的部署方面，因此，just follow就好。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; mkdir rap2</span><br><span class="line">&gt; cd rap2</span><br><span class="line">&gt; git clone https://github.com/thx/rap2-delos.git</span><br><span class="line">&gt; cd rap2-delos</span><br><span class="line">&gt; docker-compose up -d</span><br></pre></td></tr></table></figure><p>运行成功后，需要手动初始化数据库，我们进入对象的容器来操作：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker exec -it rap2-delos sh</span><br><span class="line">&gt; node scripts/init</span><br><span class="line">&gt; exit</span><br></pre></td></tr></table></figure><p>重新启动服务：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker-compose down</span><br><span class="line">&gt; docker-compose up -d</span><br></pre></td></tr></table></figure><p>可以看到暴露出来的端口是<code>38080</code>，我们使用<code>curl</code>命令来测试一下是否成功，如果放回<code>Hello RAP!</code>，就说明后端已经部署好了。</p><h2 id="前端部署"><a href="#前端部署" class="headerlink" title="前端部署"></a>前端部署</h2><p>前端由于没有提供对应的docker部署方法，因此只有我自己来尝试部署了。前端使用的是node进行webpack打包，因此需要一个node的环境，所以我在制作容器的时候需要拉去一个node镜像。</p><p>因为部署前端之前没有看后端的部署，所以我前端拉取了一个比较新的版本[10.1.0]，如果想和后端公用一个node镜像，可以使用这个node:8.11.1-alpine镜像。</p><p>通过npm run build之后，生成的build文件夹中的只是静态资源文件，因此我还需要起一个服务器，这里我通过全局安装http-server来启动一个服务。</p><p>下面是具体的过程：</p><ol><li><p>git仓库拉取</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; cd rap2</span><br><span class="line">&gt; git clone https://github.com/thx/rap2-dolores.git</span><br><span class="line">&gt; cd rap2-dolores</span><br></pre></td></tr></table></figure></li><li><p>创建一个Dockerfile来构建一个新的node版本镜像</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; touch Dockerfile</span><br><span class="line">&gt; vim Dockerfile</span><br></pre></td></tr></table></figure></li></ol><p>Dockerfile中的内容为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 拉取10.1.0版本的node镜像</span><br><span class="line">FROM node:10.1.0</span><br><span class="line"></span><br><span class="line"># 维护人</span><br><span class="line">MAINTAINER ryn</span><br><span class="line"></span><br><span class="line"># 创建工作目录</span><br><span class="line">RUN mkdir -p /home/rap2-dolores</span><br><span class="line">WORKDIR /home/rap2-dolores</span><br><span class="line"></span><br><span class="line"># 将代码拷贝至工作目录</span><br><span class="line">COPY . /home/rap2-dolores</span><br><span class="line"></span><br><span class="line"># 全局安装http-server服务器</span><br><span class="line">RUN npm install -g http-server</span><br><span class="line"></span><br><span class="line"># 全局安装node-sass(一定要带--unsafe-perm，否则会报错)</span><br><span class="line">RUN npm install --unsafe-perm -g node-sass</span><br><span class="line"></span><br><span class="line"># 安装依赖</span><br><span class="line">RUN npm install</span><br><span class="line"></span><br><span class="line"># 打包</span><br><span class="line">RUN npm run build</span><br></pre></td></tr></table></figure><ol start="3"><li>使用docker-compose来启动服务<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; touch docker-compose.yml</span><br><span class="line">&gt; vim docker-compose.yml</span><br></pre></td></tr></table></figure></li></ol><p>docker-compose.yml中的内容为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;2.2&apos;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  delores:</span><br><span class="line">    # 容器名称</span><br><span class="line">    container_name: rap2-dolores</span><br><span class="line">    </span><br><span class="line">    # 通过Dockerfile来构建本地镜像</span><br><span class="line">    build: .</span><br><span class="line">    </span><br><span class="line">    # 通过images来构建，这里的地址暂不适用，因为src/config中的配置需要根据自己的服务器来动态构建</span><br><span class="line">    # image rynxiao/rap2-dolores-nodejs</span><br><span class="line">    </span><br><span class="line">    # 指定工作目录</span><br><span class="line">    working_dir: /home/rap2-dolores</span><br><span class="line">    </span><br><span class="line">    # 指定生产环境</span><br><span class="line">    environment:</span><br><span class="line">      - NODE_ENV=production</span><br><span class="line">      </span><br><span class="line">    # 启动http-server，并映射端口到容器内部8081上</span><br><span class="line">    command: /bin/sh -c &apos;http-server ./build -s -p 8081&apos;</span><br><span class="line">    privileged: true</span><br><span class="line">    </span><br><span class="line">    # expose port 38081</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;38081:8081&quot;</span><br><span class="line">更改src/config/config.prod.js中的配置，将接口请求地址指向你的后端服务器，以下是我的配置，各位按需更改。</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  serve: &apos;http://xxx.xxx.xxx.xx:38080&apos;,</span><br><span class="line">  keys: [&apos;some secret hurr&apos;],</span><br><span class="line">  session: &#123;</span><br><span class="line">    key: &apos;koa:sess&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>注意上面的xxx.xxx.xxx.xxx是你公网的ip地址，如果你通过端口映射做了二级域名的配置，也可以去掉端口号，直接写你的二级域名就可以了，比如你的二级域名为：<a href="http://rap2.xxx.com，那么serve就可以配置为http://rap2.xxx.com。" target="_blank" rel="noopener">http://rap2.xxx.com，那么serve就可以配置为http://rap2.xxx.com。</a></p><h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker-compose up -d</span><br></pre></td></tr></table></figure><p>这一步会执行镜像的构建，使用docker ps可以查看最新的构建镜像，使用docker-compose ps可以查看运行的容器</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个是一篇转载文章，进行简化了&lt;/p&gt;
+&lt;p&gt;转载文章：&lt;a href=&quot;https://www.cnblogs.com/rynxiao/p/9080179.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.cnblogs.com/rynxiao/p/9080179.html&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="docker" scheme="https://blog.zhinenganquan.cn/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://blog.zhinenganquan.cn/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker 常见命令</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/18/docker-%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/18/docker-常见命令/</id>
+    <published>2019-02-18T11:14:00.000Z</published>
+    <updated>2019-12-25T02:35:36.311Z</updated>
+    
+    <content type="html"><![CDATA[<p>很多命令比较常见，记录记录一下</p><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><h4 id="查看运行容器"><a href="#查看运行容器" class="headerlink" title="查看运行容器"></a>查看运行容器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure><a id="more"></a><h4 id="查看所有容器"><a href="#查看所有容器" class="headerlink" title="查看所有容器"></a>查看所有容器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h3 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h3><p>其中字符串为容器ID:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it d27bd3008ad9 /bin/bash</span><br></pre></td></tr></table></figure></p><h3 id="停用全部运行中的容器"><a href="#停用全部运行中的容器" class="headerlink" title="停用全部运行中的容器:"></a>停用全部运行中的容器:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop $(docker ps -q)</span><br></pre></td></tr></table></figure><h3 id="删除全部容器："><a href="#删除全部容器：" class="headerlink" title="删除全部容器："></a>删除全部容器：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker ps -aq)</span><br></pre></td></tr></table></figure><h3 id="一条命令实现停用并删除容器："><a href="#一条命令实现停用并删除容器：" class="headerlink" title="一条命令实现停用并删除容器："></a>一条命令实现停用并删除容器：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop $(docker ps -q) &amp; docker rm $(docker ps -aq)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很多命令比较常见，记录记录一下&lt;/p&gt;
+&lt;h2 id=&quot;容器&quot;&gt;&lt;a href=&quot;#容器&quot; class=&quot;headerlink&quot; title=&quot;容器&quot;&gt;&lt;/a&gt;容器&lt;/h2&gt;&lt;h4 id=&quot;查看运行容器&quot;&gt;&lt;a href=&quot;#查看运行容器&quot; class=&quot;headerlink&quot; title=&quot;查看运行容器&quot;&gt;&lt;/a&gt;查看运行容器&lt;/h4&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://blog.zhinenganquan.cn/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker资源</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/17/docker%E8%B5%84%E6%BA%90/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/17/docker资源/</id>
+    <published>2019-02-17T06:02:00.000Z</published>
+    <updated>2019-12-25T02:35:36.311Z</updated>
+    
+    <content type="html"><![CDATA[<p>国内下载特别慢，下载推荐这个</p><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="https://get.daocloud.io/#install-docker-for-mac-windows" target="_blank" rel="noopener">https://get.daocloud.io/#install-docker-for-mac-windows</a></p><p>下载会快很多</p><p>或者如果有代理，那就快很多咯</p><p>在阿里镜像里面可以直接下载而且很快</p><a id="more"></a><h2 id="换国内镜像"><a href="#换国内镜像" class="headerlink" title="换国内镜像"></a>换国内镜像</h2><p>官方镜像：<a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">https://www.docker-cn.com/registry-mirror</a></p><p><img src="/images/pasted-0.png" alt="upload successful"></p><p>中国科技大学的镜像加速器：中科大的加速器不用注册，直接使用地址 <a href="https://docker.mirrors.ustc.edu.cn/" target="_blank" rel="noopener">https://docker.mirrors.ustc.edu.cn/</a> 配置加速器即可。</p><p>进一步的信息可以访问：<a href="http://mirrors.ustc.edu.cn/help/dockerhub.html?highlight=docker" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/help/dockerhub.html?highlight=docker</a></p><p>阿里云加速器：注册阿里云开发账户(免费的)后，访问这个链接就可以看到加速器地址： <a href="https://cr.console.aliyun.com/#/accelerator" target="_blank" rel="noopener">https://cr.console.aliyun.com/#/accelerator</a><br>DaoCloud 加速器：注册 DaoCloud 账户(支持微信登录)，</p><p>然后访问： <a href="https://www.daocloud.io/mirror#accelerator-doc" target="_blank" rel="noopener">https://www.daocloud.io/mirror#accelerator-doc</a></p><p>注意：不要使用加速器网站所给的配置脚本，容易导致错误。我们只需获取其提供的加速器地址即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;国内下载特别慢，下载推荐这个&lt;/p&gt;
+&lt;h2 id=&quot;下载&quot;&gt;&lt;a href=&quot;#下载&quot; class=&quot;headerlink&quot; title=&quot;下载&quot;&gt;&lt;/a&gt;下载&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://get.daocloud.io/#install-docker-for-mac-windows&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://get.daocloud.io/#install-docker-for-mac-windows&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下载会快很多&lt;/p&gt;
+&lt;p&gt;或者如果有代理，那就快很多咯&lt;/p&gt;
+&lt;p&gt;在阿里镜像里面可以直接下载而且很快&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="docker" scheme="https://blog.zhinenganquan.cn/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://blog.zhinenganquan.cn/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac忘记MySQL登录密码</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/17/Mac%E5%BF%98%E8%AE%B0MySQL%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/17/Mac忘记MySQL登录密码/</id>
+    <published>2019-02-17T05:45:00.000Z</published>
+    <updated>2019-12-25T02:35:36.308Z</updated>
+    
+    <content type="html"><![CDATA[<p>在操作MySQL，会保存这个信息，你需要重置密码了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: YES)</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="重置密码步骤"><a href="#重置密码步骤" class="headerlink" title="重置密码步骤"></a>重置密码步骤</h2><h3 id="1-停止MySQL"><a href="#1-停止MySQL" class="headerlink" title="1.停止MySQL"></a>1.停止MySQL</h3><p>这里有两种方法</p><p>a. 在 ‘系统偏好设置’ &gt; MySQL &gt;  ‘Stop MySQL Server’</p><p>b. 在终端直接输入:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo /usr/local/mysql/support-files/mysql.server stop</span><br></pre></td></tr></table></figure><p>注: 会要求你输入你的用户密码, 注意光标不会移动, 就照常敲就可以了, 只有3次机会.</p><p>注意mysql的存放路径, 查看你自己mysql的路径是否是 /usr/local 不是的话更改到你的存放路径</p><h3 id="2-进入MySQL安全模式"><a href="#2-进入MySQL安全模式" class="headerlink" title="2.进入MySQL安全模式"></a>2.进入MySQL安全模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</span><br></pre></td></tr></table></figure><h3 id="3-设置新密码"><a href="#3-设置新密码" class="headerlink" title="3.设置新密码"></a>3.设置新密码</h3><p>打开另一个新终端[command+n (就可以新建一个窗口)]，<br>逐条输入, 一共4句!!</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo /usr/local/mysql/bin/mysql -u root</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$UPDATE mysql.user SET authentication_string=PASSWORD(&apos;新密码&apos;) WHERE User=&apos;root&apos;;</span><br></pre></td></tr></table></figure><p>注: 在 “新密码” 出填写你想要设置的新密码, 不要再忘记了!</p><p>注: 如果敲完 enter 没有出现Query OK, 0 rows affected (0.00 sec)说明语句写错了, 基本就是单引号不是英文状态!  这时候\q好像不能够退出终端了, 需要重新进入再重新输入. 记得改单引号!</p><p>补充:<br>启动MySQL服务</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo /usr/local/MySQL/support-files/mysql.server start</span><br></pre></td></tr></table></figure><p>重启MySQL服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo /usr/local/mysql/support-files/mysql.server restart</span><br></pre></td></tr></table></figure></p><p>要是设置不了，可以暴力处理，卸载重新安装MySQL🧐</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在操作MySQL，会保存这个信息，你需要重置密码了&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: YES)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://blog.zhinenganquan.cn/categories/MySQL/"/>
+    
+      <category term="开发" scheme="https://blog.zhinenganquan.cn/categories/MySQL/%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="MySQL" scheme="https://blog.zhinenganquan.cn/tags/MySQL/"/>
+    
+      <category term="数据库" scheme="https://blog.zhinenganquan.cn/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows10家庭版的功能中没有Hyper-V的解决方法</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/16/Windows10%E5%AE%B6%E5%BA%AD%E7%89%88%E7%9A%84%E5%8A%9F%E8%83%BD%E4%B8%AD%E6%B2%A1%E6%9C%89Hyper-V%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/16/Windows10家庭版的功能中没有Hyper-V的解决方法/</id>
+    <published>2019-02-16T04:55:15.000Z</published>
+    <updated>2019-12-25T02:35:36.310Z</updated>
+    
+    <content type="html"><![CDATA[<p>在网络找个秘钥升级一下，就可以升级专业版</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在网络找个秘钥升级一下，就可以升级专业版&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Vultr修改SSH端口</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/12/Vultr%E4%BF%AE%E6%94%B9SSH%E7%AB%AF%E5%8F%A3/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/12/Vultr修改SSH端口/</id>
+    <published>2019-02-12T04:44:00.000Z</published>
+    <updated>2019-12-25T02:35:36.309Z</updated>
+    
+    <content type="html"><![CDATA[<p>Vultr的默认SSH端口是22，也就是一般通用默认的SSH端口。这样的设置方便记忆，但是安全性可能不高。那么如果你想提高安全性，或者SSH端口被封了，如何修改这个Vultr默认的SSH端口呢？本文就介绍下Vultr如何修改SSH端口。</p><a id="more"></a><h2 id="SSH远程登陆Vultr"><a href="#SSH远程登陆Vultr" class="headerlink" title="SSH远程登陆Vultr"></a>SSH远程登陆Vultr</h2><p>首先，需要先SSH远程登陆到Vultr服务器，</p><p>如何SSH没有被封，则可以通过ssh相关工具登录，例如：git</p><ul><li><a href="https://www.vultryhw.cn/vultr-ssh-login/" target="_blank" rel="noopener">Windows/Mac/Linux如何SSH远程连接/登陆Vultr</a></li><li><a href="https://www.vultryhw.cn/vultr-ssh-online/" target="_blank" rel="noopener">Vultr自带SSH登陆工具 在线SSH远程登陆</a></li></ul><p>如果SSH已经被封了，则可以根据Vultr自带SSH登陆工具 在线SSH远程登陆用Vultr自带的SSH工具远程登陆到VPS。</p><h2 id="修改Vultr-SSH端口配置文件"><a href="#修改Vultr-SSH端口配置文件" class="headerlink" title="修改Vultr SSH端口配置文件"></a>修改Vultr SSH端口配置文件</h2><p>Vultr的SSH端口配置文件为/etc/ssh/sshd_config，因此使用VIM编辑器修改这个配置文件中的SSH端口，命令为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure><p>之后找到SSH端口的那一项（即Port对应的那个值），修改成你想要设置的值，例如我这里设置为2222：</p><p><img src="http://upload-images.jianshu.io/upload_images/1379609-dc5eaf52c4aa6612.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Vultr修改SSH端口"></p><p>（VIM编辑器如果不会使用可以参考：<a href="https://www.vultryhw.cn/vultr-how-to-use-vim/" target="_blank" rel="noopener">Vultr使用VIM编辑器修改及新建文件</a>）</p><p>之后重启SSH服务即可：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh restart</span><br></pre></td></tr></table></figure><p>如果提示命令不存在，则执行执行reboot命令重启服务器即可。重启完毕后，你Vultr的SSH端口就改变成功了。</p><p>转载：<a href="https://www.vultryhw.cn/vultr-change-ssh-port/" target="_blank" rel="noopener">https://www.vultryhw.cn/vultr-change-ssh-port/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vultr的默认SSH端口是22，也就是一般通用默认的SSH端口。这样的设置方便记忆，但是安全性可能不高。那么如果你想提高安全性，或者SSH端口被封了，如何修改这个Vultr默认的SSH端口呢？本文就介绍下Vultr如何修改SSH端口。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://blog.zhinenganquan.cn/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="ssh" scheme="https://blog.zhinenganquan.cn/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/ssh/"/>
+    
+      <category term="转载" scheme="https://blog.zhinenganquan.cn/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/ssh/%E8%BD%AC%E8%BD%BD/"/>
+    
+    
+      <category term="服务器" scheme="https://blog.zhinenganquan.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="vultr" scheme="https://blog.zhinenganquan.cn/tags/vultr/"/>
+    
+      <category term="端口" scheme="https://blog.zhinenganquan.cn/tags/%E7%AB%AF%E5%8F%A3/"/>
+    
+      <category term="ssh" scheme="https://blog.zhinenganquan.cn/tags/ssh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用sftp方式上传hexo网站到服务器</title>
+    <link href="https://blog.zhinenganquan.cn/2019/02/01/%E4%BD%BF%E7%94%A8sftp%E6%96%B9%E5%BC%8F%E4%B8%8A%E4%BC%A0hexo%E7%BD%91%E7%AB%99%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>https://blog.zhinenganquan.cn/2019/02/01/使用sftp方式上传hexo网站到服务器/</id>
+    <published>2019-02-01T07:35:00.000Z</published>
+    <updated>2019-12-25T02:35:36.328Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-下载插件"><a href="#1-下载插件" class="headerlink" title="1.下载插件"></a>1.下载插件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-sftp --save</span><br></pre></td></tr></table></figure><h2 id="2-在ubuntu服务器上创建目录"><a href="#2-在ubuntu服务器上创建目录" class="headerlink" title="2.在ubuntu服务器上创建目录"></a>2.在ubuntu服务器上创建目录</h2><a id="more"></a><p>使用ssh-keygen生成公钥与私钥，并添加公钥到ubutnu</p><p>生成方式其它教程都有就不再详细说，提交公钥的时候与github不同的是：github有指定位置填写公钥的字符串，而ubuntu服务器需要手动配置，放置到/{user_home}/.ssh/目录下authorized_keys这个文件中。</p><p>注意这个.ssh目录与你使用的用户名要相匹配。例如我使用的是root账户，那我的路径应该是/root/.ssh/。如果没有这个目录，请使用你的当前账户执行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure><p>生成此路径，如果没有authorized_keys这个文件，手动新建此文件亦可。然后将本机生成的id_rsa.pub中的文本复制到此文件中。</p><p>配置_config.yml，deploy节点如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: sftp</span><br><span class="line">  host: 23.xxx.xxx.112 #ip地址</span><br><span class="line">  user: root #用户名</span><br><span class="line">  port: 27452 #端口号</span><br><span class="line">  remotePath: /var/www/blog</span><br><span class="line">  privateKey: C:/Users/lin/.ssh/id_rsa #指定私钥路径</span><br></pre></td></tr></table></figure><p>此时使用hexo d即可发布到远程的ubuntu服务器中了。</p><p>配置deploy节点的时候有些需要注意的地方，privateKey需要填入的路径必须是反斜杠。</p><p>还有如果在发布的出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo No such directory /var/www/blog/categories</span><br></pre></td></tr></table></figure></p><p>这样的提示注意清空一下你的remotePath文件夹下的文件。</p><p>另外deploy不仅可以使用加入公钥的方式。也可以使用用户名匹配密码的方式，配置如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: sftp</span><br><span class="line">  host: 23.xxx.xxx.112 #ip地址</span><br><span class="line">  user: root #用户名</span><br><span class="line">  pass: xxxxxxxxxx #密码</span><br><span class="line">  port: 27452 #端口号</span><br><span class="line">  remotePath: /var/www/blog</span><br></pre></td></tr></table></figure><p>好了，今天就到这里。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-下载插件&quot;&gt;&lt;a href=&quot;#1-下载插件&quot; class=&quot;headerlink&quot; title=&quot;1.下载插件&quot;&gt;&lt;/a&gt;1.下载插件&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;npm install hexo-deployer-sftp --save&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;2-在ubuntu服务器上创建目录&quot;&gt;&lt;a href=&quot;#2-在ubuntu服务器上创建目录&quot; class=&quot;headerlink&quot; title=&quot;2.在ubuntu服务器上创建目录&quot;&gt;&lt;/a&gt;2.在ubuntu服务器上创建目录&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="部署" scheme="https://blog.zhinenganquan.cn/categories/%E9%83%A8%E7%BD%B2/"/>
+    
+    
+      <category term="服务器" scheme="https://blog.zhinenganquan.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="hexo" scheme="https://blog.zhinenganquan.cn/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>管理多个git生成的ssh key</title>
+    <link href="https://blog.zhinenganquan.cn/2018/11/22/%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAgit%E7%94%9F%E6%88%90%E7%9A%84ssh-key/"/>
+    <id>https://blog.zhinenganquan.cn/2018/11/22/管理多个git生成的ssh-key/</id>
+    <published>2018-11-22T06:08:00.000Z</published>
+    <updated>2019-12-25T02:35:36.329Z</updated>
+    
+    <content type="html"><![CDATA[<p>经常我们可能需要上传github，和gitlab，或者你有多个github账号，我们需要对应不同的账号上传，我们需要配置多个ssh key</p><p>这里我们就以配置github，gitlab，两个ssh key 为案例</p><h2 id="1-生成两个不同的ssh"><a href="#1-生成两个不同的ssh" class="headerlink" title="1.生成两个不同的ssh"></a>1.生成两个不同的ssh</h2><h4 id="生成第一个ssh-key"><a href="#生成第一个ssh-key" class="headerlink" title="生成第一个ssh key"></a>生成第一个ssh key</h4><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;yourmail@gmail.com&quot;</span><br></pre></td></tr></table></figure><p>这里不要一路回传，让你选择在哪里选择存放key的时候写个名字，比如 id_rsa_github，之后的两个可以回车。<br><img src="https://upload-images.jianshu.io/upload_images/1379609-79183f34fce86c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>上图的红色框框是自己输入的，便于区分</p><h4 id="生成第二个ssh-key"><a href="#生成第二个ssh-key" class="headerlink" title="生成第二个ssh key"></a>生成第二个ssh key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;yourmail@gmail.com&quot;</span><br></pre></td></tr></table></figure><p>一样不要一路回车<br><img src="https://upload-images.jianshu.io/upload_images/1379609-e13f8a09d5ca9fab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>最终结果是这样子的：</p><p><img src="https://upload-images.jianshu.io/upload_images/1379609-e0816b4a14017445.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>图中的config文件是我自己建的，也就是接下来要说的</p><h2 id="2-配置config"><a href="#2-配置config" class="headerlink" title="2.配置config"></a>2.配置config</h2><p>新建文件config文件，打开</p><p>输入一下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># gitlab</span><br><span class="line">Host gitlab.com</span><br><span class="line">    HostName gitlab.com  </span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_gitlab</span><br><span class="line">    User xiaqijian // 输入自己账号名</span><br><span class="line">    </span><br><span class="line"># github</span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_github</span><br><span class="line">    User xiaqijian  // 这里输入自己的账号名</span><br></pre></td></tr></table></figure><p>注意：如果拷贝我的，要把后面的注释去掉</p><p>然后保存起来</p><h2 id="分别在github，gitlab填上ssh-key"><a href="#分别在github，gitlab填上ssh-key" class="headerlink" title="分别在github，gitlab填上ssh key"></a>分别在github，gitlab填上ssh key</h2><p><img src="https://upload-images.jianshu.io/upload_images/1379609-f1a3d0f75c193c8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>填上刚刚生成的，</p><p>然后你就可以上传文件试试</p><p>或者用下面方法测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></p><p><img src="https://upload-images.jianshu.io/upload_images/1379609-66c8a4841f782f01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>首发于微信公众号：node前端</p><p>不妨关注一下，我们一起学习</p><p>回复：100</p><p>有福利哦</p><p><img src="https://upload-images.jianshu.io/upload_images/1379609-65af2f22f29c4796.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;经常我们可能需要上传github，和gitlab，或者你有多个github账号，我们需要对应不同的账号上传，我们需要配置多个ssh key&lt;/p&gt;
+&lt;p&gt;这里我们就以配置github，gitlab，两个ssh key 为案例&lt;/p&gt;
+&lt;h2 id=&quot;1-生成两个不同的ssh&quot;&gt;&lt;a href=&quot;#1-生成两个不同的ssh&quot; class=&quot;headerlink&quot; title=&quot;1.生成两个不同的ssh&quot;&gt;&lt;/a&gt;1.生成两个不同的ssh&lt;/h2&gt;&lt;h4 id=&quot;生成第一个ssh-key&quot;&gt;&lt;a href=&quot;#生成第一个ssh-key&quot; class=&quot;headerlink&quot; title=&quot;生成第一个ssh key&quot;&gt;&lt;/a&gt;生成第一个ssh key&lt;/h4&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="开发" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="github" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91/github/"/>
+    
+    
+      <category term="工具" scheme="https://blog.zhinenganquan.cn/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="git" scheme="https://blog.zhinenganquan.cn/tags/git/"/>
+    
+      <category term="github" scheme="https://blog.zhinenganquan.cn/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>koa,express,node 简化版连接MongoDB</title>
+    <link href="https://blog.zhinenganquan.cn/2018/11/16/Untitledkoa-express-node-%E7%AE%80%E5%8C%96%E7%89%88%E8%BF%9E%E6%8E%A5MongoDB/"/>
+    <id>https://blog.zhinenganquan.cn/2018/11/16/Untitledkoa-express-node-简化版连接MongoDB/</id>
+    <published>2018-11-16T07:07:00.000Z</published>
+    <updated>2019-12-25T02:35:36.309Z</updated>
+    
+    <content type="html"><![CDATA[<p>这个方法，node，express，koa连接MongoDB都是一样的方法，我们利用mongoose模块来连接</p><p>关于连接mysql看这篇文章 : <a href="/2018/11/16/koa-express-node-通用方法连接MySQL/">koa,express,node 通用方法连接MySQL</a></p><p>这里只是简单列一下连接MongoDB的结构，其实要真正懂MongoDB，还需要很多知识点，比如MongoDB的数据类型，还有一些API操作</p><a id="more"></a><p>简单说一下MongoDB的结构</p><p><img src="https://upload-images.jianshu.io/upload_images/1379609-bc0d30313f4f91b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>其他内容下次，分享，今天先连上😂</p><hr><p>注意我的版本</p><p>这是我的目录<br><img src="https://upload-images.jianshu.io/upload_images/1379609-055c91e26d2fa715.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>我的安装的依赖版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;koa&quot;: &quot;^2.6.2&quot;,</span><br><span class="line">    &quot;mongoose&quot;: &quot;^5.3.12&quot;,</span><br><span class="line">  &#125;`</span><br></pre></td></tr></table></figure></p><h2 id="1-连接MongoDB"><a href="#1-连接MongoDB" class="headerlink" title="1.连接MongoDB"></a>1.连接MongoDB</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// db/db.js</span><br><span class="line">const mongoose = require(&apos;mongoose&apos;)</span><br><span class="line"></span><br><span class="line">const DB_URL = &apos;mongodb://localhost:27017/local&apos;</span><br><span class="line"></span><br><span class="line">mongoose.connect(DB_URL)</span><br><span class="line"></span><br><span class="line">mongoose.connection.on(&apos;connected&apos;,function() &#123;</span><br><span class="line">   console.log(&apos;Mongoose connection open to &apos;+DB_URL);</span><br><span class="line">&#125;);</span><br><span class="line">/**</span><br><span class="line">* 连接异常 error 数据库连接错误</span><br><span class="line">*/</span><br><span class="line">mongoose.connection.on(&apos;error&apos;,function(err) &#123;</span><br><span class="line">  console.log(&apos;Mongoose connection error: &apos;+ err);</span><br><span class="line">&#125;);</span><br><span class="line">/**</span><br><span class="line">* 连接断开 disconnected 连接异常断开</span><br><span class="line">*/</span><br><span class="line">mongoose.connection.on(&apos;disconnected&apos;,function() &#123;</span><br><span class="line">  console.log(&apos;Mongoose connection disconnected&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">module.exports = mongoose</span><br><span class="line">`</span><br></pre></td></tr></table></figure><h2 id="2-设置需要操作的集合"><a href="#2-设置需要操作的集合" class="headerlink" title="2.设置需要操作的集合"></a>2.设置需要操作的集合</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// db/index.js</span><br><span class="line">const mongoose = require(&apos;./db&apos;)</span><br><span class="line">const Schema = mongoose.Schema;</span><br><span class="line"></span><br><span class="line">const ceshiSchema = new Schema(&#123;</span><br><span class="line">  title: String,</span><br><span class="line">  body: String,</span><br><span class="line">  date: Date</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const MyModel = mongoose.model(&apos;ceshi&apos;, ceshiSchema);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Mongodb &#123;</span><br><span class="line">  constructor () &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">// 查询</span><br><span class="line">  query () &#123;</span><br><span class="line">     return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">       MyModel.find(&#123;&#125;, (err, res) =&gt; &#123;</span><br><span class="line">         if(err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">// 保存</span><br><span class="line">  save (obj) &#123;</span><br><span class="line">     const m = new MyModel(obj)</span><br><span class="line">     return new Promise((resolve, reject)=&gt; &#123;</span><br><span class="line">       m.save((err, res) =&gt; &#123;</span><br><span class="line">         if (err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">         console.log(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">     </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = new Mongodb()</span><br></pre></td></tr></table></figure><p>这里就简单举例了查询和保存方法，还是其他方法，可以具体去看文档</p><h2 id="3-设置服务器"><a href="#3-设置服务器" class="headerlink" title="3.设置服务器"></a>3.设置服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// index.js</span><br><span class="line">const Koa = require(&apos;koa&apos;)</span><br><span class="line">const config = require(&apos;./config/default&apos;)</span><br><span class="line">const ModelDb = require(&apos;./db&apos;)</span><br><span class="line"></span><br><span class="line">const app =  new Koa()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.use(async (ctx) =&gt; &#123;</span><br><span class="line">     let data = await ModelDb.query()</span><br><span class="line">    ctx.body = data</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.listen(config.port)</span><br><span class="line"></span><br><span class="line">console.log(`listening on port $&#123;config.port&#125;`)</span><br></pre></td></tr></table></figure><h2 id="4-启动服务器"><a href="#4-启动服务器" class="headerlink" title="4.启动服务器"></a>4.启动服务器</h2><p>打开浏览器，就可以看的查询出来的结果</p><p>注意：前提在ceshi结合要有文档，也就是要有数据</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个方法，node，express，koa连接MongoDB都是一样的方法，我们利用mongoose模块来连接&lt;/p&gt;
+&lt;p&gt;关于连接mysql看这篇文章 : &lt;a href=&quot;/2018/11/16/koa-express-node-通用方法连接MySQL/&quot;&gt;koa,express,node 通用方法连接MySQL&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这里只是简单列一下连接MongoDB的结构，其实要真正懂MongoDB，还需要很多知识点，比如MongoDB的数据类型，还有一些API操作&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="开发" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="数据库" scheme="https://blog.zhinenganquan.cn/categories/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="koa" scheme="https://blog.zhinenganquan.cn/tags/koa/"/>
+    
+      <category term="node" scheme="https://blog.zhinenganquan.cn/tags/node/"/>
+    
+      <category term="MongoDB" scheme="https://blog.zhinenganquan.cn/tags/MongoDB/"/>
+    
+  </entry>
+  
+</feed>

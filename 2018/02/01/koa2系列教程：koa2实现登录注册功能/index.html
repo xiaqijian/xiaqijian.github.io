@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="google-site-verification" content="hCSsq932nmFCHdOQeRapTAsPFYsSWYfPSDmreDcFRrI" />
+
+
+
+  <meta name="description" content="koa2系列教程：koa2实现登录注册功能"/>
+
+
+
+
+  <meta name="keywords" content="xiaqijian,xiaduntian,lass,夏其建的博客,夏顿天博客,lassblog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiaduntian blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.2" />
+
+
+
+<link rel="canonical" href="https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2实现登录注册功能/"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.2" />
+
+
+
+  
+  <script id="baidu_analytics">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e5721c2974c3c413d048a19a357c2112";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=117905561"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '117905561');
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz",
+      appKey: "hcvXvq3frez96hAA9UE5Gjrm"
+    });
+  </script>
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":"Y7yFND8X8FQkahsbnCNmKDTW-gzGzoHsz","app_key":"hcvXvq3frez96hAA9UE5Gjrm"},"toc":true,"fancybox":false,"pjax":true};
+</script>
+
+    <title> koa2系列教程：koa2实现登录注册功能 - xiaduntian blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">xiaduntian blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">xiaduntian blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          koa2系列教程：koa2实现登录注册功能
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-02-01
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/koa2/">koa2</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/02/01/koa2系列教程：koa2实现登录注册功能/"
+             data-title="koa2系列教程：koa2实现登录注册功能">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-编辑user-js"><span class="toc-text">1.编辑user.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-编辑-登录注册路由"><span class="toc-text">2.编辑 登录注册路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-编辑index-js"><span class="toc-text">3.编辑index.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-启动服务"><span class="toc-text">4.启动服务</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <hr>
+<p>这个主要结合前几天的内容，做个实际案例的效果</p>
+<p>版本：</p>
+<a id="more"></a>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-59b55747f236c79b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>项目结构：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-54e83f7b7a5933e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>前几天，我们把注册和登录的页面demo实现了，今天我们主要实现这么几个内容</p>
+<ul>
+<li>注册新用户</li>
+<li>判断该邮箱是否注册过</li>
+<li>登录判断是否注册过</li>
+<li>登录时的密码的正确</li>
+</ul>
+<p>本文代码地址：<a href="https://github.com/xiaqijian/koa2-lessons/tree/master/lesson6" target="_blank" rel="noopener">https://github.com/xiaqijian/koa2-lessons/tree/master/lesson6</a></p>
+<p>明天，我们将利用session实现登录状态判断</p>
+<p>今天的这篇是在之前的代码基础上添加的，我们就晒主要的代码</p>
+<h2 id="1-编辑user-js"><a href="#1-编辑user-js" class="headerlink" title="1.编辑user.js"></a>1.编辑user.js</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">// db/user.js</span><br><span class="line">const mongoose = require(&apos;./db&apos;)</span><br><span class="line">const Schema = mongoose.Schema;</span><br><span class="line"></span><br><span class="line">const ceshiSchema = new Schema(&#123;</span><br><span class="line">  email: String,</span><br><span class="line">  name: String,</span><br><span class="line">  password: String</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const MyModel = mongoose.model(&apos;User&apos;, ceshiSchema);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Userdb &#123;</span><br><span class="line">  constructor () &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">// 查询</span><br><span class="line">  query (obj = &#123;&#125;) &#123;</span><br><span class="line">     return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">       MyModel.find(obj, (err, res) =&gt; &#123;</span><br><span class="line">         if(err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">queryEmail (em) &#123;</span><br><span class="line">   return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">     MyModel.find(&#123;email: em&#125;, (err, res) =&gt; &#123;</span><br><span class="line">       if(err) &#123;</span><br><span class="line">         reject(err)</span><br><span class="line">       &#125;</span><br><span class="line">       const len = res.length</span><br><span class="line">       if(len &gt;= 1)&#123;</span><br><span class="line">         // 存在</span><br><span class="line">         resolve(res)</span><br><span class="line">       &#125;else &#123;</span><br><span class="line">         // 不存在</span><br><span class="line">         resolve(null)</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 保存</span><br><span class="line">  save (obj) &#123;</span><br><span class="line">     const m = new MyModel(obj)</span><br><span class="line">     return new Promise((resolve, reject)=&gt; &#123;</span><br><span class="line">       m.save((err, res) =&gt; &#123;</span><br><span class="line">         if (err) &#123;</span><br><span class="line">           reject(err)</span><br><span class="line">         &#125;</span><br><span class="line">         resolve(res)</span><br><span class="line">         console.log(res)</span><br><span class="line">       &#125;)</span><br><span class="line">     &#125;)</span><br><span class="line">     </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">module.exports = new Userdb()</span><br></pre></td></tr></table></figure>
+<p>上面主要查询用户，和保存用户</p>
+<h2 id="2-编辑-登录注册路由"><a href="#2-编辑-登录注册路由" class="headerlink" title="2.编辑 登录注册路由"></a>2.编辑 登录注册路由</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">// router/index.js</span><br><span class="line"></span><br><span class="line">const Router = require(&apos;koa-router&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// </span><br><span class="line">const User = require(&apos;../db/user&apos;)</span><br><span class="line">const home = new Router()</span><br><span class="line"></span><br><span class="line">home.get(&apos;/&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    let title = &apos;首页&apos;</span><br><span class="line">    await ctx.render(&apos;index&apos;, &#123;</span><br><span class="line">        title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 子路由2</span><br><span class="line">const page = new Router()</span><br><span class="line"></span><br><span class="line">page.get(&apos;/404&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    let title = &quot;404&quot;</span><br><span class="line">    await ctx.render(&apos;err&apos;, &#123;</span><br><span class="line">        title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const login = new Router()</span><br><span class="line"></span><br><span class="line">login.get(&apos;/&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    let title = &quot;登录&quot;</span><br><span class="line">    await ctx.render(&apos;login&apos;, &#123;</span><br><span class="line">        title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).post(&apos;/&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    const data = ctx.request.body</span><br><span class="line">    let queryres = await User.queryEmail(data.email)</span><br><span class="line">    console.log(queryres)</span><br><span class="line">    if (queryres) &#123;</span><br><span class="line">        if(queryres[0].password === data.password) &#123;</span><br><span class="line">            ctx.body = &#123;</span><br><span class="line">                &apos;code&apos;: 1,</span><br><span class="line">                &apos;data&apos;: queryres[0],</span><br><span class="line">                &apos;mesg&apos;: &apos;登录成功&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            ctx.body = &#123;</span><br><span class="line">                &apos;code&apos;: 0,</span><br><span class="line">                &apos;data&apos;: &#123;&#125;,</span><br><span class="line">                &apos;mesg&apos;: &apos;密码错误&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        ctx.body = &#123;</span><br><span class="line">            &apos;code&apos;: 0,</span><br><span class="line">            &apos;data&apos;: &#123;&#125;,</span><br><span class="line">            &apos;mesg&apos;: &apos;没有该用户，去注册吧&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const register = new Router()</span><br><span class="line"></span><br><span class="line">register.get(&apos;/&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    let title = &quot;注册&quot;</span><br><span class="line">    await ctx.render(&apos;register&apos;, &#123;</span><br><span class="line">        title</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).post(&apos;/&apos;, async (ctx) =&gt; &#123;</span><br><span class="line">    const data = ctx.request.body</span><br><span class="line">    let queryres = await User.queryEmail(data.email)</span><br><span class="line">    if (queryres) &#123;</span><br><span class="line">        ctx.body = &#123;</span><br><span class="line">            &apos;code&apos;: 0,</span><br><span class="line">            &apos;data&apos;: &#123;&#125;,</span><br><span class="line">            &apos;mesg&apos;: &apos;该邮箱已经存在哦&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        await User.save(data)</span><br><span class="line">        ctx.body = &#123;</span><br><span class="line">            &apos;code&apos;: 1,</span><br><span class="line">            &apos;data&apos;: &#123;&#125;,</span><br><span class="line">            &apos;mesg&apos;: &apos;保存成功&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 装载所有子路由</span><br><span class="line">let router = new Router()</span><br><span class="line">router.use(&apos;/&apos;, home.routes(), home.allowedMethods())</span><br><span class="line">router.use(&apos;/page&apos;, page.routes(), page.allowedMethods())</span><br><span class="line">router.use(&apos;/login&apos;, login.routes(), login.allowedMethods())</span><br><span class="line">router.use(&apos;/register&apos;, register.routes(), register.allowedMethods())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module.exports = router</span><br></pre></td></tr></table></figure>
+<h2 id="3-编辑index-js"><a href="#3-编辑index-js" class="headerlink" title="3.编辑index.js"></a>3.编辑index.js</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const Koa = require(&apos;koa&apos;)</span><br><span class="line">const views = require(&apos;koa-views&apos;)</span><br><span class="line">const statics =  require(&apos;koa-static&apos;)</span><br><span class="line">const bodyparser = require(&apos;koa-bodyparser&apos;)</span><br><span class="line">const path = require(&apos;path&apos;)</span><br><span class="line">const router =  require(&apos;./router&apos;)</span><br><span class="line">const app = new Koa()</span><br><span class="line"></span><br><span class="line">const staticPath = &apos;./static&apos;</span><br><span class="line"></span><br><span class="line">app.use(statics(</span><br><span class="line">  path.join(__dirname, staticPath)</span><br><span class="line">))</span><br><span class="line">app.use(bodyparser())</span><br><span class="line"></span><br><span class="line">// 加载模板引擎</span><br><span class="line">app.use(views(path.join(__dirname, &apos;./views&apos;), &#123;</span><br><span class="line">    extension: &apos;ejs&apos;</span><br><span class="line">  &#125;))</span><br><span class="line"></span><br><span class="line">// 加载路由中间件</span><br><span class="line">app.use(router.routes()).use(router.allowedMethods())</span><br><span class="line"></span><br><span class="line">app.listen(3000, () =&gt; &#123;</span><br><span class="line">    console.log(&apos;localhost:3000&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这个和之前的内容增加了<code>koa-bodyparser</code>对post数据的解析，利用<code>ctx.request.body</code>获取</p>
+<h2 id="4-启动服务"><a href="#4-启动服务" class="headerlink" title="4.启动服务"></a>4.启动服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<p>打开浏览器localhost:3000</p>
+<p>尝试去登录注册一下，打开控制台，就可以看得到相关后台返回的数据</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-fdb1aa4430014b81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1379609-7791eef0165bbad8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>本文结束，下次文章利用session对登录状态的判断</p>
+<p>本文代码地址：<a href="https://github.com/xiaqijian/koa2-lessons/tree/master/lesson6" target="_blank" rel="noopener">https://github.com/xiaqijian/koa2-lessons/tree/master/lesson6</a></p>
+<hr>
+<p>本文首发于：node前端</p>
+<p>不妨关注一下</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://blog.zhinenganquan.cn">xiaqijian</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2实现登录注册功能/">https://blog.zhinenganquan.cn/2018/02/01/koa2系列教程：koa2实现登录注册功能/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/koa2/">koa2</a>
+            
+              <a href="/tags/教程/">教程</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/02/01/koa2系列教程：综合koa2搭建登录注册页面/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">koa2系列教程：综合koa2搭建登录注册页面</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/29/将本地项目上传github/">
+        <span class="next-text nav-default">将本地项目上传github</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:xiaqijian009@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/xiaqijian" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">xiaqijian</span> 
+    <a class="theme-link" href="http://beian.miit.gov.cn">浙ICP备16027119号-1</a>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.2"></script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":true},"log":false});</script></body>
+</html>
